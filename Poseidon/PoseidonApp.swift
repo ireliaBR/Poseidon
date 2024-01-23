@@ -11,7 +11,7 @@ import SwiftUI
 struct PoseidonApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            PhotoEditor()
         }
     }
 }
