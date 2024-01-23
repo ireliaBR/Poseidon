@@ -1,0 +1,26 @@
+PODS:
+  - glm (0.9.4.6)
+  - LookinServer (1.2.4):
+    - LookinServer/Core (= 1.2.4)
+  - LookinServer/Core (1.2.4)
+  - SnapKit (5.6.0)
+
+DEPENDENCIES:
+  - glm
+  - LookinServer
+  - SnapKit
+
+SPEC REPOS:
+  trunk:
+    - glm
+    - LookinServer
+    - SnapKit
+
+SPEC CHECKSUMS:
+  glm: e22c8d9df10404059b19c2952f9fa44d9a9f3056
+  LookinServer: 00c7588043ed8e7ab64ce55b9fb747e51371ad06
+  SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
+
+PODFILE CHECKSUM: 3b82bd5dda4d48ec5d1204d5677c5505b9975c15
+
+COCOAPODS: 1.14.2

@@ -9,15 +9,10 @@ import SwiftUI
 
 struct PhotoEditor: View {
     
-    @State var isShowShapePanel: Bool = true
-    @State var isShowPaintPanel: Bool = false
-    @State var isShowPhotoPanel: Bool = false
-    
     @State var yOffset: CGFloat = 134
-    
     @State var currentSelectedType: HomePanel.ButtonType = .none {
         didSet {
-            
+            yOffset = currentSelectedType == .none ? 134 : 0
         }
     }
     
@@ -27,37 +22,20 @@ struct PhotoEditor: View {
             VStack {
                 Canvas()
                 HomePanel { type in
-                    currentSelectedType = type
                     withAnimation(.easeIn) {
-                        yOffset = 0
+                        currentSelectedType = type
                     }
                 }
             }
             VStack {
-                Button(action: {}) {
-                    
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                HStack {
-                    Spacer()
-                    Button(action: {}) {
-                        Image(systemName: "square.fill")
-                            .font(.system(size: 60))
-                        
-                    }
-                    Spacer()
-                    Button(action: {}) {
-                        Image(systemName: "triangle.fill")
-                            .font(.system(size: 60))
-                        
-                    }
-                    Spacer()
-                }
+                Spacer()
+                ShapePanel()
                 .frame(maxWidth: .infinity, maxHeight: 134)
                 .background(.white)
                 .offset(y: yOffset)
+                
             }
-            .opacity(isShowShapePanel ? 1.0 : 0.0)
+            .opacity(currentSelectedType == .shape ? 1.0 : 0.0)
         }
         .edgesIgnoringSafeArea(.bottom)
     }
@@ -95,6 +73,36 @@ struct HomePanel: View {
         case paint
         case photo
         case none
+    }
+}
+
+struct ShapePanel: View {
+    var body: some View {
+        VStack {
+            HStack {
+                Spacer()
+                Button(action: {
+                    
+                }) {
+                    Image(systemName: "square.fill")
+                        .font(.system(size: 60))
+                    
+                }
+                Spacer()
+                Button(action: {
+                    
+                }) {
+                    Image(systemName: "triangle.fill")
+                        .font(.system(size: 60))
+                    
+                }
+                Spacer()
+            }
+            .padding()
+            Spacer()
+        }
+        .frame(maxWidth: .infinity, maxHeight: 134)
+        .background(.white)
     }
 }
 
