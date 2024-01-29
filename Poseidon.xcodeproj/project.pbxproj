@@ -14,8 +14,11 @@
 		692474972B5FAA2E003C91F3 /* PhotoEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692474962B5FAA2E003C91F3 /* PhotoEditor.swift */; };
 		699DD7842B5FC5760067A43E /* Element.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699DD7832B5FC5760067A43E /* Element.swift */; };
 		699DD7862B5FC5E70067A43E /* ShapeElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699DD7852B5FC5E70067A43E /* ShapeElement.swift */; };
-		699DD7892B5FD5150067A43E /* Canvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699DD7882B5FD5150067A43E /* Canvas.swift */; };
+		699DD7892B5FD5150067A43E /* CanvasControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699DD7882B5FD5150067A43E /* CanvasControl.swift */; };
 		699DD78D2B5FD6080067A43E /* CanvasConvertControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 699DD78B2B5FD6080067A43E /* CanvasConvertControl.cpp */; };
+		69CE60A82B67910200FC7B50 /* Shape.vs in Resources */ = {isa = PBXBuildFile; fileRef = 695876732B6785D800F2C6AC /* Shape.vs */; };
+		69CE60A92B67910400FC7B50 /* Shape.fs in Resources */ = {isa = PBXBuildFile; fileRef = 695876742B6785EA00F2C6AC /* Shape.fs */; };
+		69CE60AC2B6791B600FC7B50 /* CanvasController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69CE60AB2B6791B600FC7B50 /* CanvasController.swift */; };
 		DC8A956AFB9C1C7BEF2B0183 /* Pods_Poseidon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FC14CE0C741BD9DEEBA4612 /* Pods_Poseidon.framework */; };
 /* End PBXBuildFile section */
 
@@ -28,12 +31,15 @@
 		6924748B2B5FA877003C91F3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6924748E2B5FA877003C91F3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		692474962B5FAA2E003C91F3 /* PhotoEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoEditor.swift; sourceTree = "<group>"; };
+		695876732B6785D800F2C6AC /* Shape.vs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Shape.vs; sourceTree = "<group>"; };
+		695876742B6785EA00F2C6AC /* Shape.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Shape.fs; sourceTree = "<group>"; };
 		699DD7832B5FC5760067A43E /* Element.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Element.swift; sourceTree = "<group>"; };
 		699DD7852B5FC5E70067A43E /* ShapeElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeElement.swift; sourceTree = "<group>"; };
-		699DD7882B5FD5150067A43E /* Canvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Canvas.swift; sourceTree = "<group>"; };
+		699DD7882B5FD5150067A43E /* CanvasControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasControl.swift; sourceTree = "<group>"; };
 		699DD78A2B5FD6080067A43E /* Poseidon-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Poseidon-Bridging-Header.h"; sourceTree = "<group>"; };
 		699DD78B2B5FD6080067A43E /* CanvasConvertControl.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CanvasConvertControl.cpp; sourceTree = "<group>"; };
 		699DD78C2B5FD6080067A43E /* CanvasConvertControl.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CanvasConvertControl.hpp; sourceTree = "<group>"; };
+		69CE60AB2B6791B600FC7B50 /* CanvasController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasController.swift; sourceTree = "<group>"; };
 		F54001BDA0905C2EB7C3CB1F /* Pods-Poseidon.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Poseidon.release.xcconfig"; path = "Target Support Files/Pods-Poseidon/Pods-Poseidon.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -105,6 +111,15 @@
 			path = Module;
 			sourceTree = "<group>";
 		};
+		695876722B67859800F2C6AC /* ShaderSource */ = {
+			isa = PBXGroup;
+			children = (
+				695876732B6785D800F2C6AC /* Shape.vs */,
+				695876742B6785EA00F2C6AC /* Shape.fs */,
+			);
+			path = ShaderSource;
+			sourceTree = "<group>";
+		};
 		699DD77D2B5FC18D0067A43E /* PhotoEditor */ = {
 			isa = PBXGroup;
 			children = (
@@ -125,6 +140,8 @@
 		699DD77F2B5FC1C00067A43E /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				69CE60AA2B6791A900FC7B50 /* View */,
+				695876722B67859800F2C6AC /* ShaderSource */,
 				699DD7872B5FD4FB0067A43E /* Control */,
 				699DD7822B5FC5560067A43E /* Model */,
 				699DD7812B5FC5510067A43E /* cpp */,
@@ -161,9 +178,17 @@
 		699DD7872B5FD4FB0067A43E /* Control */ = {
 			isa = PBXGroup;
 			children = (
-				699DD7882B5FD5150067A43E /* Canvas.swift */,
+				699DD7882B5FD5150067A43E /* CanvasControl.swift */,
 			);
 			path = Control;
+			sourceTree = "<group>";
+		};
+		69CE60AA2B6791A900FC7B50 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				69CE60AB2B6791B600FC7B50 /* CanvasController.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		9D6FC22C629C4586834BDCB2 /* Frameworks */ = {
@@ -235,6 +260,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				69CE60A92B67910400FC7B50 /* Shape.fs in Resources */,
+				69CE60A82B67910200FC7B50 /* Shape.vs in Resources */,
 				6924748F2B5FA877003C91F3 /* Preview Assets.xcassets in Resources */,
 				6924748C2B5FA877003C91F3 /* Assets.xcassets in Resources */,
 			);
@@ -290,12 +317,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				692474972B5FAA2E003C91F3 /* PhotoEditor.swift in Sources */,
+				69CE60AC2B6791B600FC7B50 /* CanvasController.swift in Sources */,
 				6924748A2B5FA876003C91F3 /* ContentView.swift in Sources */,
 				699DD7862B5FC5E70067A43E /* ShapeElement.swift in Sources */,
 				699DD7842B5FC5760067A43E /* Element.swift in Sources */,
 				699DD78D2B5FD6080067A43E /* CanvasConvertControl.cpp in Sources */,
 				692474882B5FA876003C91F3 /* PoseidonApp.swift in Sources */,
-				699DD7892B5FD5150067A43E /* Canvas.swift in Sources */,
+				699DD7892B5FD5150067A43E /* CanvasControl.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -433,6 +461,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Poseidon/Preview Content\"";
 				DEVELOPMENT_TEAM = 7KTMC558L5;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"COCOAPODS=1",
@@ -472,6 +501,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Poseidon/Preview Content\"";
 				DEVELOPMENT_TEAM = 7KTMC558L5;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"COCOAPODS=1",

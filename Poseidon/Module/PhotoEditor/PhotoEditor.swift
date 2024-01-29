@@ -20,7 +20,8 @@ struct PhotoEditor: View {
     var body: some View {
         ZStack {
             VStack {
-                Canvas()
+                CanvasView()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                 HomePanel { type in
                     withAnimation(.easeIn) {
                         currentSelectedType = type
@@ -29,7 +30,7 @@ struct PhotoEditor: View {
             }
             VStack {
                 Spacer()
-                ShapePanel()
+                ShapePanel(currentSelectedType: $currentSelectedType)
                 .frame(maxWidth: .infinity, maxHeight: 134)
                 .background(.white)
                 .offset(y: yOffset)
@@ -66,6 +67,9 @@ struct HomePanel: View {
             Spacer()
         }
         .frame(height: 84)
+        .background(.white)
+        .compositingGroup()
+        .shadow(color: Color.black.opacity(0.3), radius: 5, x: 0, y: 2)
     }
     
     enum ButtonType {
@@ -77,12 +81,17 @@ struct HomePanel: View {
 }
 
 struct ShapePanel: View {
+    
+    @Binding var currentSelectedType: HomePanel.ButtonType
+    
     var body: some View {
         VStack {
             HStack {
                 Spacer()
                 Button(action: {
-                    
+                    withAnimation(.easeIn) {
+                        currentSelectedType = .none
+                    }
                 }) {
                     Image(systemName: "square.fill")
                         .font(.system(size: 60))
@@ -103,6 +112,8 @@ struct ShapePanel: View {
         }
         .frame(maxWidth: .infinity, maxHeight: 134)
         .background(.white)
+        .compositingGroup()
+        .shadow(color: Color.black.opacity(0.3), radius: 5, x: 0, y: 2)
     }
 }
 
@@ -126,12 +137,12 @@ struct PhotoEditorButton: View {
     }
 }
 
-struct Canvas: View {
-    var body: some View {
-        Color.red
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-    }
-}
+//struct CanvasVieww: View {
+//    var body: some View {
+//        Color.red
+//            .frame(maxWidth: .infinity, maxHeight: .infinity)
+//    }
+//}
 
 #Preview {
     PhotoEditor()

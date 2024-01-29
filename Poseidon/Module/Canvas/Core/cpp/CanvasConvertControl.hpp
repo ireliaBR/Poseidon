@@ -11,11 +11,16 @@
 #include <stdio.h>
 
 class CanvasConvertControl {
+private:
     
+    float screenWidth;
+    float screenHeight;
     
 public:
+    void draw(unsigned int VAO, unsigned int program, unsigned int renderCount);
+    void configScreen(float screenWidth, float screenHeight);
     unsigned int createProgram(const char *vsSource, const char *fsSource);
-    unsigned int createVAO(const float *vertices, const size_t verticesLength, const int *indices, const size_t indicesLength);
+    unsigned int createVAO(const float *vertices, const long verticesLength, const int *indices, const long indicesLength);
 };
 
 #endif /* CanvasConvertControl_hpp */

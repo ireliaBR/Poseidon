@@ -9,19 +9,37 @@
 #include <OpenGLES/ES3/gl.h>
 #include <iostream>
 
-unsigned int createVAO(const float *vertices, const size_t verticesLength, const int *indices, const size_t indicesLength) {
-    // set up vertex data (and buffer(s)) and configure vertex attributes
-    // ------------------------------------------------------------------
-    float vertices[] = {
-        0.5f,  0.5f, 0.0f,  // top right
-        0.5f, -0.5f, 0.0f,  // bottom right
-        -0.5f, -0.5f, 0.0f,  // bottom left
-        -0.5f,  0.5f, 0.0f   // top left
-    };
-    unsigned int indices[] = {  // note that we start from 0!
-        0, 1, 3,  // first Triangle
-        1, 2, 3   // second Triangle
-    };
+
+void CanvasConvertControl::configScreen(float screenWidth, float screenHeight) {
+    this->screenWidth = screenWidth;
+    this->screenHeight = screenHeight;
+}
+
+void CanvasConvertControl::draw(unsigned int VAO, unsigned int program, unsigned int renderCount) {
+    glViewport(0, 0, screenWidth, screenHeight);
+    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+    
+    // draw our first triangle
+    glUseProgram(program);
+    glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
+    glDrawElements(GL_TRIANGLES, renderCount, GL_UNSIGNED_INT, 0);
+}
+
+unsigned int CanvasConvertControl::createVAO(const float *vertices, const long verticesLength, const int *indices, const long indicesLength) {
+//    // set up vertex data (and buffer(s)) and configure vertex attributes
+//    // ------------------------------------------------------------------
+//    float verticesss[] = {
+//        0.5f,  0.5f, 0.0f,  // top right
+//        0.5f, -0.5f, 0.0f,  // bottom right
+//        -0.5f, -0.5f, 0.0f,  // bottom left
+//        -0.5f,  0.5f, 0.0f   // top left
+//    };
+//    unsigned int indicessss[] = {  // note that we start from 0!
+//        0, 1, 3,  // first Triangle
+//        1, 2, 3   // second Triangle
+//    };
+    unsigned int VAO, VBO, EBO;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
     glGenBuffers(1, &EBO);
@@ -29,10 +47,10 @@ unsigned int createVAO(const float *vertices, const size_t verticesLength, const
     glBindVertexArray(VAO);
     
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, verticesLength, vertices, GL_STATIC_DRAW);
     
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indicesLength, indices, GL_STATIC_DRAW);
     
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
@@ -46,6 +64,8 @@ unsigned int createVAO(const float *vertices, const size_t verticesLength, const
     // You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
     // VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
     glBindVertexArray(0);
+    
+    return VAO;
 }
 
 unsigned int CanvasConvertControl::createProgram(const char *vsSource, const char *fsSource) {
