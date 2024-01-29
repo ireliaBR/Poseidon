@@ -9,6 +9,10 @@
 #include <OpenGLES/ES3/gl.h>
 #include <iostream>
 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 
 void CanvasConvertControl::configScreen(float screenWidth, float screenHeight) {
     this->screenWidth = screenWidth;
@@ -21,7 +25,18 @@ void CanvasConvertControl::draw(unsigned int VAO, unsigned int program, unsigned
     glClear(GL_COLOR_BUFFER_BIT);
     
     // draw our first triangle
+    glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(screenWidth), 0.0f, static_cast<float>(screenHeight));
+    
+    glm::mat4 model = glm::mat4(1.0f);
+    model = glm::translate(model, glm::vec3(0, 0, 0));
+    model = glm::scale(model, glm::vec3(1242, 1242, 1));
+//    model = glm::scale(model, glm::vec3(1.0f, screenWidth / screenHeight, 1.0f));
+    
+    
     glUseProgram(program);
+    glUniformMatrix4fv(glGetUniformLocation(program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+    glUniformMatrix4fv(glGetUniformLocation(program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+    
     glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
     glDrawElements(GL_TRIANGLES, renderCount, GL_UNSIGNED_INT, 0);
 }
