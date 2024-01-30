@@ -17,6 +17,12 @@ class CanvasControl {
         convertControl.configScreen(Float(width), Float(height))
     }
     
+    func draw() {
+        let convertElements = elements.map { $0.convertModel() }
+        let point = convertElements.withUnsafeBufferPointer { UnsafePointer<ConvertElement>($0.baseAddress) }
+        convertControl.draw(point, elements.count)
+    }
+    
     func addElement(_ element: Element) {
         var copyElement = element
         if copyElement.program == nil {
@@ -37,8 +43,6 @@ class CanvasControl {
             copyElement.VAO = convertControl.createVAO(&copyElement.vertices, MemoryLayout<Float>.size * copyElement.vertices.count, &copyElement.indices, MemoryLayout<Int32>.size * copyElement.indices.count)
         }
         
-        let array = [copyElement.convertModel()]
-        let point = array.withUnsafeBufferPointer { UnsafePointer<ConvertElement>($0.baseAddress) }
-        convertControl.draw(point, array.count)
+        elements.append(copyElement)
     }
 }
