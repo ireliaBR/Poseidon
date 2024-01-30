@@ -19,7 +19,7 @@ void CanvasConvertControl::configScreen(float screenWidth, float screenHeight) {
     this->screenHeight = screenHeight;
 }
 
-void CanvasConvertControl::draw(unsigned int VAO, unsigned int program, unsigned int renderCount) {
+void CanvasConvertControl::draw(const ConvertElement *array, size_t count) {
     glViewport(0, 0, screenWidth, screenHeight);
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
@@ -27,18 +27,22 @@ void CanvasConvertControl::draw(unsigned int VAO, unsigned int program, unsigned
     // draw our first triangle
     glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(screenWidth), 0.0f, static_cast<float>(screenHeight));
     
-    glm::mat4 model = glm::mat4(1.0f);
-    model = glm::translate(model, glm::vec3(0, 0, 0));
-    model = glm::scale(model, glm::vec3(1242, 1242, 1));
+//    glm::mat4 model = glm::mat4(1.0f);
+//    model = glm::translate(model, glm::vec3(0, 0, 0));
+//    model = glm::scale(model, glm::vec3(1242, 1242, 1));
 //    model = glm::scale(model, glm::vec3(1.0f, screenWidth / screenHeight, 1.0f));
+    for (int i = 0; i < count; i++) {
+        ConvertElement element = array[i];
+        element.transform[3][1] = screenHeight - element.transform[3][1];
+        
+        glUseProgram(element.program);
+        glUniformMatrix4fv(glGetUniformLocation(element.program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+        glUniformMatrix4fv(glGetUniformLocation(element.program, "model"), 1, GL_FALSE, glm::value_ptr(element.transform));
+        
+        glBindVertexArray(element.VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
+        glDrawElements(GL_TRIANGLES, element.renderCount, GL_UNSIGNED_INT, 0);
+    }
     
-    
-    glUseProgram(program);
-    glUniformMatrix4fv(glGetUniformLocation(program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
-    glUniformMatrix4fv(glGetUniformLocation(program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-    
-    glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
-    glDrawElements(GL_TRIANGLES, renderCount, GL_UNSIGNED_INT, 0);
 }
 
 unsigned int CanvasConvertControl::createVAO(const float *vertices, const long verticesLength, const int *indices, const long indicesLength) {

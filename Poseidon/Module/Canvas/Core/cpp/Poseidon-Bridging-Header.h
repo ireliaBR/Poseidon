@@ -3,3 +3,4 @@
 //
 
 #include "CanvasConvertControl.hpp"
+#include "ConvertElement.hpp"
