@@ -12,6 +12,7 @@ struct PoseidonApp: App {
     var body: some Scene {
         WindowGroup {
             PhotoEditor()
+                .environmentObject(MessageViewModel())
         }
     }
 }

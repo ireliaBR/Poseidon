@@ -16,7 +16,6 @@ struct PhotoEditor: View {
         }
     }
     
-    
     var body: some View {
         ZStack {
             VStack {
@@ -82,6 +81,7 @@ struct HomePanel: View {
 
 struct ShapePanel: View {
     
+    @EnvironmentObject var messageViewModel: MessageViewModel
     @Binding var currentSelectedType: HomePanel.ButtonType
     
     var body: some View {
@@ -89,6 +89,10 @@ struct ShapePanel: View {
             HStack {
                 Spacer()
                 Button(action: {
+                    let randomNumber = CGFloat(arc4random_uniform(301))
+                    var element = ShapeElement(size: CGSize(width: 200, height: 200), color: .green)
+                    element.translate(tx: randomNumber, ty: randomNumber, tz: 0)
+                    messageViewModel.element = element
                     withAnimation(.easeIn) {
                         currentSelectedType = .none
                     }

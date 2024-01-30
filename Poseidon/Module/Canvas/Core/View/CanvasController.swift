@@ -8,8 +8,16 @@
 import Foundation
 import GLKit
 import SwiftUI
+import Combine
+
+class MessageViewModel: ObservableObject {
+    @Published var element: Element?
+}
 
 class CanvasController: GLKViewController {
+    
+    private var cancellables = Set<AnyCancellable>()
+    let messageViewModel: MessageViewModel
     
     let canvasControl = CanvasControl()
     var shapeElement = {
@@ -19,6 +27,15 @@ class CanvasController: GLKViewController {
         element.translate(tx: 200, ty: 200, tz: 0)
         return element
     }()
+    
+    init(messageViewModel: MessageViewModel) {
+        self.messageViewModel = messageViewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,11 +47,21 @@ class CanvasController: GLKViewController {
         view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(panView(gesture:))))
         view.addGestureRecognizer(UIRotationGestureRecognizer(target: self, action: #selector(rotationView(gesture:))))
         view.addGestureRecognizer(UIPinchGestureRecognizer(target: self, action: #selector(scaleView(gesture:))))
+        
+        // 使用 Combine 监听 @Published 属性的更改
+        messageViewModel.$element
+            .sink { [weak self] element in
+                if element != nil {
+                    self?.canvasControl.addElement(element!)
+                }
+            }
+            .store(in: &cancellables)
     }
 
     override func glkView(_ view: GLKView, drawIn rect: CGRect) {
         canvasControl.viewPort(width: view.drawableWidth, height: view.drawableHeight)
-        canvasControl.addElement(shapeElement)
+//        canvasControl.addElement(shapeElement)
+        canvasControl.draw()
     }
     
     var previousTranslation = CGPoint(x: 0, y: 0)
@@ -75,8 +102,11 @@ class CanvasController: GLKViewController {
 
 struct CanvasView: UIViewControllerRepresentable {
     
+    @EnvironmentObject var messageViewModel: MessageViewModel
+    
     func makeUIViewController(context: Context) -> some UIViewController {
-        return CanvasController()
+        let ctrl = CanvasController(messageViewModel: messageViewModel)
+        return ctrl
     }
     
     func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
