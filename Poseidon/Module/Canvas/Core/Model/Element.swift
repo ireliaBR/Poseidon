@@ -14,6 +14,7 @@ protocol Element {
     
     var transform: CATransform3D { get set }
     var convertTransform: CATransform3D { get set }
+    var size: CGSize { get set }
     
     var VAO: UInt32? { get set }
     var program: UInt32? { get set }

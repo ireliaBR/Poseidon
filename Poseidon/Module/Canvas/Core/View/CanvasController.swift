@@ -14,11 +14,12 @@ class MessageViewModel: ObservableObject {
     @Published var element: Element?
 }
 
-class CanvasController: GLKViewController {
+class CanvasController: GLKViewController, SelectBackgroundViewDelegate {
     
     private var cancellables = Set<AnyCancellable>()
     let messageViewModel: MessageViewModel
     
+    var selectBGView: SelectBackgroundView?
     let canvasControl = CanvasControl()
     var shapeElement = {
         var element = ShapeElement(size: CGSizeMake(100, 200), color: .red)
@@ -48,6 +49,8 @@ class CanvasController: GLKViewController {
         view.addGestureRecognizer(UIRotationGestureRecognizer(target: self, action: #selector(rotationView(gesture:))))
         view.addGestureRecognizer(UIPinchGestureRecognizer(target: self, action: #selector(scaleView(gesture:))))
         
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapView(gesture:))))
+        
         // 使用 Combine 监听 @Published 属性的更改
         messageViewModel.$element
             .sink { [weak self] element in
@@ -62,6 +65,27 @@ class CanvasController: GLKViewController {
         canvasControl.viewPort(width: view.drawableWidth, height: view.drawableHeight)
 //        canvasControl.addElement(shapeElement)
         canvasControl.draw()
+    }
+    
+    @objc func tapView(gesture: UITapGestureRecognizer) {
+        let location = gesture.location(in: view)
+        guard let element = self.canvasControl.elements.first else { return }
+        if let selectBGView {
+            selectBGView.removeFromSuperview()
+            self.selectBGView = nil
+            return
+        }
+        selectBGView = {
+            let view = SelectBackgroundView(element: element)
+            view.delegate = self
+            return view
+        }()
+        if let selectBGView {
+            view.addSubview(selectBGView)
+            selectBGView.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
+        }
     }
     
     var previousTranslation = CGPoint(x: 0, y: 0)
@@ -97,6 +121,14 @@ class CanvasController: GLKViewController {
         } else if gesture.state == .ended {
             previousScale = 1
         }
+    }
+    
+    func operationSelectView(element: Element) {
+        canvasControl.refreshElement(element)
+    }
+    
+    func deleteBtnDidClick(element: Element) {
+        canvasControl.
     }
 }
 

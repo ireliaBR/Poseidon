@@ -12,7 +12,7 @@ class CanvasControl {
     static var screenWidth: CGFloat = 0
     static var screenHeight: CGFloat = 0
     
-    private var elements = [Element]()
+    var elements = [Element]()
     
     private var convertControl = CanvasConvertControl()
     
@@ -26,6 +26,16 @@ class CanvasControl {
         let convertElements = elements.map { $0.convertModel() }
         let point = convertElements.withUnsafeBufferPointer { UnsafePointer<ConvertElement>($0.baseAddress) }
         convertControl.draw(point, elements.count)
+    }
+    
+    func refreshElement(_ element: Element) {
+        if let index = elements.firstIndex(where: { $0.identifier == element.identifier }) {
+            elements[index] = element
+        }
+    }
+    
+    func deleteElement(_ element: Element) {
+        elements.removeAll { $0.identifier == element.identifier }
     }
     
     func addElement(_ element: Element) {
