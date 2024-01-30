@@ -9,11 +9,16 @@ import Foundation
 
 class CanvasControl {
     
+    static var screenWidth: CGFloat = 0
+    static var screenHeight: CGFloat = 0
+    
     private var elements = [Element]()
     
     private var convertControl = CanvasConvertControl()
     
     func viewPort(width: Int, height: Int) {
+        CanvasControl.screenWidth = CGFloat(width)
+        CanvasControl.screenHeight = CGFloat(height)
         convertControl.configScreen(Float(width), Float(height))
     }
     

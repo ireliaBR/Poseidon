@@ -89,9 +89,8 @@ struct ShapePanel: View {
             HStack {
                 Spacer()
                 Button(action: {
-                    let randomNumber = CGFloat(arc4random_uniform(301))
                     var element = ShapeElement(size: CGSize(width: 200, height: 200), color: .green)
-                    element.translate(tx: randomNumber, ty: randomNumber, tz: 0)
+                    element.translate(tx: CanvasControl.screenWidth / 2 / element.screenScale, ty: CanvasControl.screenHeight / 2 / element.screenScale, tz: 0)
                     messageViewModel.element = element
                     withAnimation(.easeIn) {
                         currentSelectedType = .none
@@ -99,7 +98,6 @@ struct ShapePanel: View {
                 }) {
                     Image(systemName: "square.fill")
                         .font(.system(size: 60))
-                    
                 }
                 Spacer()
                 Button(action: {
