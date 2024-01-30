@@ -32,19 +32,7 @@ struct ShapeElement: Element {
     var VAO: UInt32?
     var program: UInt32?
     
-    var vsSource: String = {
-        let vsPath = Bundle.main.path(forResource: "Shape", ofType: "vs")!
-        let vsSource = try! String(contentsOfFile: vsPath, encoding: .utf8)
-//        let vsPointer = vsSource.withUnsafeBufferPointer { UnsafePointer<CChar>($0.baseAddress) }
-        return vsSource
-    }()
-    
-    var fsSource: String = {
-        let fsPath = Bundle.main.path(forResource: "Shape", ofType: "fs")!
-        let fsSource = try! String(contentsOfFile: fsPath, encoding: .utf8)
-//        let fsPointer = fsSource.withUnsafeBufferPointer { UnsafePointer<CChar>($0.baseAddress) }
-        return fsSource
-    }()
+    var shaderName: String = "Shape"
     
     func convertModel() -> ConvertElement {
         var element = ConvertElement()
