@@ -26,13 +26,6 @@ class CanvasController: GLKViewController, SelectBackgroundViewDelegate {
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapView(gesture:))))
         return view
     }()
-    var shapeElement = {
-        var element = ShapeElement(size: CGSizeMake(100, 200), color: .red)
-        element.rotate(angle: 3.14 / 4, 0, 0, 1)
-        element.scale(sx: 1.5, sy: 1.5, sz: 1)
-        element.translate(tx: 200, ty: 200, tz: 0)
-        return element
-    }()
     
     var tapAction: (() -> Void)?
     

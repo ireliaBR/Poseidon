@@ -30,7 +30,7 @@ class SelectBackgroundView: UIView {
     
     let deleteButton = {
         let button = UIButton()
-        button.setImage(UIImage(systemName: "x.circle.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 20))?.withTintColor(.white), for: .normal)
+        button.setImage(UIImage(systemName: "x.circle.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 20))?.withTintColor(.gray), for: .normal)
         return button
     }()
     

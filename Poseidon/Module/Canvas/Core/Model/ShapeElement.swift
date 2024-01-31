@@ -18,21 +18,41 @@ struct ShapeElement: Element {
     
     var color: UIColor
     
-    var vertices: [Float] = [
-        0.5,  0.5, 0.0,  // top right
-        0.5, -0.5, 0.0,  // bottom right
-        -0.5, -0.5, 0.0,  // bottom left
-        -0.5,  0.5, 0.0,  // top left
-    ]
-    var indices: [Int32] = [
-        0, 1, 3,  // first Triangle
-        1, 2, 3,   // second Triangle
-    ]
+    var vertices: [Float]
+    var indices: [Int32]
     
     var VAO: UInt32?
     var program: UInt32?
     
     var shaderName: String = "Shape"
+    
+    static let square = {
+        let vertices: [Float] = [
+            0.5,  0.5, 0.0,  // top right
+            0.5, -0.5, 0.0,  // bottom right
+            -0.5, -0.5, 0.0,  // bottom left
+            -0.5,  0.5, 0.0,  // top left
+        ]
+        let indices: [Int32] = [
+            0, 1, 3,  // first Triangle
+            1, 2, 3,   // second Triangle
+        ]
+        let element = ShapeElement(size: CGSize(width: 150, height: 150), color: .red, vertices: vertices, indices: indices)
+        return element
+    }()
+    
+    static var triangle = {
+        let vertices: [Float] = [
+            -0.5, -0.5, 0.0, // left
+             0.5, -0.5, 0.0, // right
+             0.0,  0.5, 0.0  // top
+        ]
+        let indices: [Int32] = [
+            0, 1, 2
+        ]
+        let element = ShapeElement(size: CGSize(width: 150, height: 150), color: .red, vertices: vertices, indices: indices)
+        return element
+    }()
     
     func convertModel() -> ConvertElement {
         var element = ConvertElement()
