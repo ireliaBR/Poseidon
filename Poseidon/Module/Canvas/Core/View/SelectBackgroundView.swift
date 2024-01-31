@@ -25,9 +25,15 @@ class SelectBackgroundView: UIView {
     
     let deleteButton = {
         let button = UIButton()
-        button.setImage(UIImage(systemName: "x.circle.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 20))?.withTintColor(.black), for: .normal)
+        button.setImage(UIImage(systemName: "x.circle.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 20))?.withTintColor(.white), for: .normal)
         return button
     }()
+    
+//    let rotateButton = {
+//        let button = UIButton()
+//        button.setImage(UIImage(systemName: "rectangle.portrait.rotate", withConfiguration: UIImage.SymbolConfiguration(pointSize: 20))?.withTintColor(.white), for: .normal)
+//        return button
+//    }()
     
     weak var delegate: SelectBackgroundViewDelegate?
     var element: Element
@@ -44,6 +50,10 @@ class SelectBackgroundView: UIView {
         selectView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(panView(gesture:))))
         selectView.addGestureRecognizer(UIRotationGestureRecognizer(target: self, action: #selector(rotationView(gesture:))))
         selectView.addGestureRecognizer(UIPinchGestureRecognizer(target: self, action: #selector(scaleView(gesture:))))
+        
+        deleteButton.addTarget(self, action: #selector(deleteButtonClick), for: .touchUpInside)
+//        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(rotateButtonPanGesture(_:)))
+//        rotateButton.addGestureRecognizer(panGestureRecognizer)
     }
     
     required init?(coder: NSCoder) {
@@ -67,9 +77,15 @@ class SelectBackgroundView: UIView {
         
         selectView.addSubview(deleteButton)
         deleteButton.snp.makeConstraints { make in
-            make.centerX.equalTo(selectView.snp.left)
-            make.centerY.equalTo(selectView.snp.top)
+            make.left.equalTo(selectView.snp.left)
+            make.top.equalTo(selectView.snp.top)
         }
+        
+//        selectView.addSubview(rotateButton)
+//        rotateButton.snp.makeConstraints { make in
+//            make.right.equalToSuperview()
+//            make.bottom.equalToSuperview()
+//        }
     }
     
     func refreshSelectView(transform: CATransform3D) {
@@ -114,9 +130,40 @@ class SelectBackgroundView: UIView {
             previousScale = 1
         }
     }
+    
+    @objc func deleteButtonClick() {
+        delegate?.deleteBtnDidClick(element: element)
+    }
+    
+//    var previousRotateCenterPoint = CGPointZero
+//    @objc func rotateButtonPanGesture(_ gesture: UIPanGestureRecognizer) {
+//        guard let button = gesture.view as? UIButton else { return }
+//        
+//        // 获取拖动手势的位置
+//        let translation = gesture.translation(in: selectView)
+//        let buttonCenter = convert(button.center, to: selectView)
+//        let selectViewCenter = selectView.center
+//        let rotationAngle = atan2(translation.y, translation.x)
+////        print("previousRotateCenterPoint: \(translation), \(rotationAngle)")
+//        
+//        switch gesture.state {
+//        case .changed:
+//                    print("\(calculateAngleBetweenPoints(point1: previousRotateCenterPoint, point2: translation))")
+//        default:
+//            break
+//        }
+//        previousRotateCenterPoint = translation
+//    }
+//    func calculateAngleBetweenPoints(point1: CGPoint, point2: CGPoint) -> CGFloat {
+//        let deltaX = point2.x - point1.x
+//        let deltaY = point2.y - point1.y
+//        return atan2(deltaY, deltaX)
+//    }
 }
 
 protocol SelectBackgroundViewDelegate: AnyObject {
+    
     func operationSelectView(element: Element)
     func deleteBtnDidClick(element: Element)
+    func cancelSelected()
 }

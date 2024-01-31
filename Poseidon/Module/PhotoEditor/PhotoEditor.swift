@@ -19,7 +19,11 @@ struct PhotoEditor: View {
     var body: some View {
         ZStack {
             VStack {
-                CanvasView()
+                CanvasView(tapAction: {
+                    withAnimation(.easeIn) {
+                        currentSelectedType = .none
+                    }
+                })
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 HomePanel { type in
                     withAnimation(.easeIn) {

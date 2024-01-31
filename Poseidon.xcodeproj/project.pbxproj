@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6904DCF72B68F3E9008E22D5 /* SelectBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6904DCF62B68F3E9008E22D5 /* SelectBackgroundView.swift */; };
+		6904DCFC2B69EF9C008E22D5 /* CGPoint+Additional.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6904DCFB2B69EF9C008E22D5 /* CGPoint+Additional.swift */; };
 		690BB64C2B68A337004764D3 /* ConvertElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 690BB64A2B68A337004764D3 /* ConvertElement.cpp */; };
 		692474882B5FA876003C91F3 /* PoseidonApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692474872B5FA876003C91F3 /* PoseidonApp.swift */; };
 		6924748A2B5FA876003C91F3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692474892B5FA876003C91F3 /* ContentView.swift */; };
@@ -28,6 +29,7 @@
 		09C32A87202990DA14C6BB6D /* Pods-Poseidon.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Poseidon.debug.xcconfig"; path = "Target Support Files/Pods-Poseidon/Pods-Poseidon.debug.xcconfig"; sourceTree = "<group>"; };
 		0FC14CE0C741BD9DEEBA4612 /* Pods_Poseidon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Poseidon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6904DCF62B68F3E9008E22D5 /* SelectBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectBackgroundView.swift; sourceTree = "<group>"; };
+		6904DCFB2B69EF9C008E22D5 /* CGPoint+Additional.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+Additional.swift"; sourceTree = "<group>"; };
 		690BB64A2B68A337004764D3 /* ConvertElement.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ConvertElement.cpp; sourceTree = "<group>"; };
 		690BB64B2B68A337004764D3 /* ConvertElement.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ConvertElement.hpp; sourceTree = "<group>"; };
 		692474842B5FA876003C91F3 /* Poseidon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Poseidon.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -67,6 +69,14 @@
 				F54001BDA0905C2EB7C3CB1F /* Pods-Poseidon.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		6904DCFA2B69EF8E008E22D5 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				6904DCFB2B69EF9C008E22D5 /* CGPoint+Additional.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 		690BB64D2B68A536004764D3 /* Control */ = {
@@ -163,6 +173,7 @@
 		699DD77F2B5FC1C00067A43E /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				6904DCFA2B69EF8E008E22D5 /* Extension */,
 				69CE60AA2B6791A900FC7B50 /* View */,
 				695876722B67859800F2C6AC /* ShaderSource */,
 				699DD7872B5FD4FB0067A43E /* Control */,
@@ -340,6 +351,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6904DCFC2B69EF9C008E22D5 /* CGPoint+Additional.swift in Sources */,
 				692474972B5FAA2E003C91F3 /* PhotoEditor.swift in Sources */,
 				69CE60AC2B6791B600FC7B50 /* CanvasController.swift in Sources */,
 				6904DCF72B68F3E9008E22D5 /* SelectBackgroundView.swift in Sources */,

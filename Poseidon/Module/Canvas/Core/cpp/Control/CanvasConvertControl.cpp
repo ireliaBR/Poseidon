@@ -38,6 +38,7 @@ void CanvasConvertControl::draw(const ConvertElement *array, size_t count) {
         glUseProgram(element.program);
         glUniformMatrix4fv(glGetUniformLocation(element.program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
         glUniformMatrix4fv(glGetUniformLocation(element.program, "model"), 1, GL_FALSE, glm::value_ptr(element.transform));
+        glUniform4fv(glGetUniformLocation(element.program, "color"), 1, glm::value_ptr(element.color));
         
         glBindVertexArray(element.VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
         glDrawElements(GL_TRIANGLES, element.renderCount, GL_UNSIGNED_INT, 0);

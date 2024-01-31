@@ -21,6 +21,11 @@ class CanvasController: GLKViewController, SelectBackgroundViewDelegate {
     
     var selectBGView: SelectBackgroundView?
     let canvasControl = CanvasControl()
+    lazy var gestureView = {
+        let view = UIView()
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapView(gesture:))))
+        return view
+    }()
     var shapeElement = {
         var element = ShapeElement(size: CGSizeMake(100, 200), color: .red)
         element.rotate(angle: 3.14 / 4, 0, 0, 1)
@@ -28,6 +33,8 @@ class CanvasController: GLKViewController, SelectBackgroundViewDelegate {
         element.translate(tx: 200, ty: 200, tz: 0)
         return element
     }()
+    
+    var tapAction: (() -> Void)?
     
     init(messageViewModel: MessageViewModel) {
         self.messageViewModel = messageViewModel
@@ -45,11 +52,10 @@ class CanvasController: GLKViewController, SelectBackgroundViewDelegate {
         glkView.drawableDepthFormat = .format24
         EAGLContext.setCurrent(glkView.context)
         
-        view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(panView(gesture:))))
-        view.addGestureRecognizer(UIRotationGestureRecognizer(target: self, action: #selector(rotationView(gesture:))))
-        view.addGestureRecognizer(UIPinchGestureRecognizer(target: self, action: #selector(scaleView(gesture:))))
-        
-        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapView(gesture:))))
+        view.addSubview(gestureView)
+        gestureView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
         
         // 使用 Combine 监听 @Published 属性的更改
         messageViewModel.$element
@@ -63,18 +69,12 @@ class CanvasController: GLKViewController, SelectBackgroundViewDelegate {
 
     override func glkView(_ view: GLKView, drawIn rect: CGRect) {
         canvasControl.viewPort(width: view.drawableWidth, height: view.drawableHeight)
-//        canvasControl.addElement(shapeElement)
         canvasControl.draw()
     }
     
     @objc func tapView(gesture: UITapGestureRecognizer) {
         let location = gesture.location(in: view)
         guard let element = self.canvasControl.elements.first else { return }
-        if let selectBGView {
-            selectBGView.removeFromSuperview()
-            self.selectBGView = nil
-            return
-        }
         selectBGView = {
             let view = SelectBackgroundView(element: element)
             view.delegate = self
@@ -86,58 +86,33 @@ class CanvasController: GLKViewController, SelectBackgroundViewDelegate {
                 make.edges.equalToSuperview()
             }
         }
+        tapAction?()
     }
-    
-    var previousTranslation = CGPoint(x: 0, y: 0)
-    @objc func panView(gesture: UIPanGestureRecognizer) {
-        let translation = gesture.translation(in: view)
-        if gesture.state == .changed {
-            let x = translation.x - previousTranslation.x
-            let y = translation.y - previousTranslation.y
-            shapeElement.translate(tx: x, ty: y, tz: 0)
-            previousTranslation = translation
-        } else {
-            previousTranslation = CGPoint(x: 0, y: 0)
-        }
-    }
-    
-    var previousAngle: CGFloat = 0
-    @objc func rotationView(gesture: UIRotationGestureRecognizer) {
-        if gesture.state == .changed {
-            let rotationAngle: CGFloat = gesture.rotation - previousAngle
-            shapeElement.rotate(angle: rotationAngle, 0, 0, 1)
-            previousAngle = gesture.rotation
-        } else if gesture.state == .ended {
-            previousAngle = 0
-        }
-    }
-    
-    var previousScale: CGFloat = 1
-    @objc func scaleView(gesture: UIPinchGestureRecognizer) {
-        if gesture.state == .changed {
-            let scale = gesture.scale - previousScale
-            shapeElement.scale(sx: 1 + scale * 0.5, sy: 1 + scale * 0.5, sz: 1)
-            previousScale = gesture.scale
-        } else if gesture.state == .ended {
-            previousScale = 1
-        }
-    }
-    
+   
     func operationSelectView(element: Element) {
         canvasControl.refreshElement(element)
     }
     
     func deleteBtnDidClick(element: Element) {
-        canvasControl.
+        canvasControl.deleteElement(element)
+        selectBGView?.removeFromSuperview()
+        selectBGView = nil
+    }
+    
+    func cancelSelected() {
+        selectBGView?.removeFromSuperview()
+        selectBGView = nil
     }
 }
 
 struct CanvasView: UIViewControllerRepresentable {
     
     @EnvironmentObject var messageViewModel: MessageViewModel
+    var tapAction: (() -> Void)?
     
     func makeUIViewController(context: Context) -> some UIViewController {
         let ctrl = CanvasController(messageViewModel: messageViewModel)
+        ctrl.tapAction = tapAction
         return ctrl
     }
     
