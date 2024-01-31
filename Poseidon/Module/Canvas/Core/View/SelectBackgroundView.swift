@@ -16,6 +16,11 @@ class SelectBackgroundView: UIView {
         return view
     }()
     
+    let bgView = {
+        let view = UIView()
+        return view
+    }()
+    
     let borderView = {
         let view = UIView()
         view.layer.borderColor = UIColor.darkGray.cgColor
@@ -47,6 +52,8 @@ class SelectBackgroundView: UIView {
         super.init(frame: CGRectZero)
         setupView()
         
+        bgView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(bgViewTap)))
+        
         selectView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(panView(gesture:))))
         selectView.addGestureRecognizer(UIRotationGestureRecognizer(target: self, action: #selector(rotationView(gesture:))))
         selectView.addGestureRecognizer(UIPinchGestureRecognizer(target: self, action: #selector(scaleView(gesture:))))
@@ -61,6 +68,12 @@ class SelectBackgroundView: UIView {
     }
     
     func setupView() {
+        
+        addSubview(bgView)
+        bgView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
         addSubview(selectView)
         selectView.snp.makeConstraints { make in
             make.centerX.equalTo(snp.left)
@@ -91,6 +104,10 @@ class SelectBackgroundView: UIView {
     func refreshSelectView(transform: CATransform3D) {
         selectView.layer.transform = transform
 //        deleteButton.layer.transform = transform
+    }
+    
+    @objc func bgViewTap() {
+        delegate?.cancelSelected()
     }
     
     @objc func panView(gesture: UIPanGestureRecognizer) {
