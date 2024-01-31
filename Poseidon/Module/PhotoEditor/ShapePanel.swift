@@ -77,7 +77,7 @@ struct ShapePanel: View {
                     Spacer()
                 }
                 .padding()
-                Spacer()
+                Spacer().frame(minHeight: 34)
             }
             .frame(maxWidth: .infinity, maxHeight: 134)
             .background(.white)

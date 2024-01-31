@@ -12,6 +12,7 @@ import Combine
 
 class MessageViewModel: ObservableObject {
     @Published var element: Element?
+    @Published var cancelSelected: Bool?
 }
 
 class CanvasController: GLKViewController, SelectBackgroundViewDelegate {
@@ -58,6 +59,14 @@ class CanvasController: GLKViewController, SelectBackgroundViewDelegate {
                 }
             }
             .store(in: &cancellables)
+        messageViewModel.$cancelSelected
+            .sink { [weak self] cancelSelected in
+                if let cancelSelected, cancelSelected {
+                    self?.selectBGView?.removeFromSuperview()
+                    self?.selectBGView = nil
+                }
+            }
+            .store(in: &cancellables)
     }
 
     override func glkView(_ view: GLKView, drawIn rect: CGRect) {
@@ -82,6 +91,7 @@ class CanvasController: GLKViewController, SelectBackgroundViewDelegate {
                 selectBGView.snp.makeConstraints { make in
                     make.edges.equalToSuperview()
                 }
+                break
             }
         }
     }

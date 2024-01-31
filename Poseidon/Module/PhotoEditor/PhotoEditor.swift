@@ -48,6 +48,7 @@ struct PhotoEditor: View {
 
 struct HomePanel: View {
     
+    @EnvironmentObject var messageViewModel: MessageViewModel
     let action: ((ButtonType) -> Void)
     
     var body: some View {
@@ -56,14 +57,17 @@ struct HomePanel: View {
                 Spacer()
                 PhotoEditorButton(icon: "squareshape.fill", text: "形状") {
                     action(.shape)
+                    messageViewModel.cancelSelected = true
                 }
                 Spacer()
                 PhotoEditorButton(icon: "paintpalette.fill", text: "画笔") {
                     action(.paint)
+                    messageViewModel.cancelSelected = true
                 }
                 Spacer()
                 PhotoEditorButton(icon: "photo.fill", text: "图片") {
                     action(.photo)
+                    messageViewModel.cancelSelected = true
                 }
                 Spacer()
             }
