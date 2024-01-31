@@ -23,6 +23,7 @@ protocol Element {
     var vertices: [Float] { get set }
     var indices: [Int32] { get set }
     
+    func inside(point: CGPoint) -> Bool
     func convertModel() -> ConvertElement
 }
 
@@ -30,6 +31,13 @@ extension Element {
     
     var screenScale: CGFloat {
         UIScreen.main.scale
+    }
+    
+    func ortho(left: CGFloat, right: CGFloat, bottom: CGFloat, top: CGFloat) -> CGAffineTransform {
+        var ortho = CGAffineTransformIdentity
+        ortho.a = (right - left) / 2
+        ortho.d = (top - bottom) / 2
+        return ortho
     }
     
     mutating func scale(sx: CGFloat, sy: CGFloat, sz: CGFloat) {

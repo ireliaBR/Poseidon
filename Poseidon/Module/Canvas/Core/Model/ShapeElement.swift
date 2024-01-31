@@ -37,9 +37,9 @@ struct ShapeElement: Element {
             0, 1, 3,  // first Triangle
             1, 2, 3,   // second Triangle
         ]
-        let element = ShapeElement(size: CGSize(width: 150, height: 150), color: .red, vertices: vertices, indices: indices)
+        var element = ShapeElement(size: CGSize(width: 150, height: 150), color: .red, vertices: vertices, indices: indices)
         return element
-    }()
+    }
     
     static var triangle = {
         let vertices: [Float] = [
@@ -52,7 +52,38 @@ struct ShapeElement: Element {
         ]
         let element = ShapeElement(size: CGSize(width: 150, height: 150), color: .red, vertices: vertices, indices: indices)
         return element
-    }()
+    }
+    
+    func inside(point: CGPoint) -> Bool {
+        let sizeTrans = CGAffineTransform(scaleX: size.width, y: size.height)
+        let affineModel = CGAffineTransform(a: CGFloat(transform.m11),
+                                                b: CGFloat(transform.m12),
+                                                c: CGFloat(transform.m21),
+                                                d: CGFloat(transform.m22),
+                                                tx: CGFloat(transform.m41),
+                                                ty: CGFloat(transform.m42))
+        let mvp = sizeTrans.concatenating(affineModel)
+        
+        var points = [CGPoint]()
+        for i in stride(from: 0, to: vertices.count, by: 3) {
+            let point = CGPoint(x: CGFloat(vertices[i]), y: CGFloat(-vertices[i + 1]))
+            points.append(point.applying(mvp))
+        }
+        
+        // 根据四边形的四个点创建一个路径
+        let path = UIBezierPath()
+        for (index, point) in points.enumerated() {
+            if index == 0 {
+                path.move(to: point)
+            } else {
+                path.addLine(to: point)
+            }
+        }
+        path.close()
+        // 判断点是否在路径内
+        let p = CGPoint(x: point.x, y: point.y)
+        return path.contains(p)
+    }
     
     func convertModel() -> ConvertElement {
         var element = ConvertElement()

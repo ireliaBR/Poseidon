@@ -66,20 +66,24 @@ class CanvasController: GLKViewController, SelectBackgroundViewDelegate {
     }
     
     @objc func tapView(gesture: UITapGestureRecognizer) {
+        tapAction?()
         let location = gesture.location(in: view)
-        guard let element = self.canvasControl.elements.first else { return }
-        selectBGView = {
-            let view = SelectBackgroundView(element: element)
-            view.delegate = self
-            return view
-        }()
-        if let selectBGView {
-            view.addSubview(selectBGView)
-            selectBGView.snp.makeConstraints { make in
-                make.edges.equalToSuperview()
+        guard canvasControl.elements.count > 0 else { return }
+        for index in stride(from: canvasControl.elements.count - 1, through: 0, by: -1) {
+            let element = canvasControl.elements[index]
+            guard element.inside(point: location) else { continue }
+            selectBGView = {
+                let view = SelectBackgroundView(element: element)
+                view.delegate = self
+                return view
+            }()
+            if let selectBGView {
+                view.addSubview(selectBGView)
+                selectBGView.snp.makeConstraints { make in
+                    make.edges.equalToSuperview()
+                }
             }
         }
-        tapAction?()
     }
    
     func operationSelectView(element: Element) {

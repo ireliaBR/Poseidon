@@ -93,7 +93,7 @@ struct ShapePanel: View {
             HStack {
                 Spacer()
                 Button(action: {
-                    var element = ShapeElement.square
+                    var element = ShapeElement.square()
                     element.translate(tx: CanvasControl.screenWidth / 2 / element.screenScale, ty: CanvasControl.screenHeight / 2 / element.screenScale, tz: 0)
                     messageViewModel.element = element
                     withAnimation(.easeIn) {
@@ -105,7 +105,7 @@ struct ShapePanel: View {
                 }
                 Spacer()
                 Button(action: {
-                    var element = ShapeElement.triangle
+                    var element = ShapeElement.triangle()
                     element.translate(tx: CanvasControl.screenWidth / 2 / element.screenScale, ty: CanvasControl.screenHeight / 2 / element.screenScale, tz: 0)
                     messageViewModel.element = element
                     withAnimation(.easeIn) {
