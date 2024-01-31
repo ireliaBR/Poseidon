@@ -25,6 +25,7 @@ struct PhotoEditor: View {
                     }
                 })
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
+//                CanvasVieww()
                 HomePanel { type in
                     withAnimation(.easeIn) {
                         currentSelectedType = type
@@ -83,51 +84,6 @@ struct HomePanel: View {
     }
 }
 
-struct ShapePanel: View {
-    
-    @EnvironmentObject var messageViewModel: MessageViewModel
-    @Binding var currentSelectedType: HomePanel.ButtonType
-    
-    var body: some View {
-        VStack {
-            HStack {
-                Spacer()
-                Button(action: {
-                    var element = ShapeElement.square()
-                    element.translate(tx: CanvasControl.screenWidth / 2 / element.screenScale, ty: CanvasControl.screenHeight / 2 / element.screenScale, tz: 0)
-                    messageViewModel.element = element
-                    withAnimation(.easeIn) {
-                        currentSelectedType = .none
-                    }
-                }) {
-                    Image(systemName: "square.fill")
-                        .font(.system(size: 60))
-                }
-                Spacer()
-                Button(action: {
-                    var element = ShapeElement.triangle()
-                    element.translate(tx: CanvasControl.screenWidth / 2 / element.screenScale, ty: CanvasControl.screenHeight / 2 / element.screenScale, tz: 0)
-                    messageViewModel.element = element
-                    withAnimation(.easeIn) {
-                        currentSelectedType = .none
-                    }
-                }) {
-                    Image(systemName: "triangle.fill")
-                        .font(.system(size: 60))
-                    
-                }
-                Spacer()
-            }
-            .padding()
-            Spacer()
-        }
-        .frame(maxWidth: .infinity, maxHeight: 134)
-        .background(.white)
-        .compositingGroup()
-        .shadow(color: Color.black.opacity(0.3), radius: 5, x: 0, y: 2)
-    }
-}
-
 struct PhotoEditorButton: View {
     let icon: String
     let text: String
@@ -148,12 +104,12 @@ struct PhotoEditorButton: View {
     }
 }
 
-//struct CanvasVieww: View {
-//    var body: some View {
-//        Color.red
-//            .frame(maxWidth: .infinity, maxHeight: .infinity)
-//    }
-//}
+struct CanvasVieww: View {
+    var body: some View {
+        Color.red
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+}
 
 #Preview {
     PhotoEditor()

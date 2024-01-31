@@ -19,6 +19,7 @@
 		699DD7862B5FC5E70067A43E /* ShapeElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699DD7852B5FC5E70067A43E /* ShapeElement.swift */; };
 		699DD7892B5FD5150067A43E /* CanvasControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699DD7882B5FD5150067A43E /* CanvasControl.swift */; };
 		699DD78D2B5FD6080067A43E /* CanvasConvertControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 699DD78B2B5FD6080067A43E /* CanvasConvertControl.cpp */; };
+		69A4DB952B6A4D28003459BE /* ShapePanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A4DB942B6A4D28003459BE /* ShapePanel.swift */; };
 		69CE60A82B67910200FC7B50 /* Shape.vs in Resources */ = {isa = PBXBuildFile; fileRef = 695876732B6785D800F2C6AC /* Shape.vs */; };
 		69CE60A92B67910400FC7B50 /* Shape.fs in Resources */ = {isa = PBXBuildFile; fileRef = 695876742B6785EA00F2C6AC /* Shape.fs */; };
 		69CE60AC2B6791B600FC7B50 /* CanvasController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69CE60AB2B6791B600FC7B50 /* CanvasController.swift */; };
@@ -46,6 +47,7 @@
 		699DD78A2B5FD6080067A43E /* Poseidon-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Poseidon-Bridging-Header.h"; sourceTree = "<group>"; };
 		699DD78B2B5FD6080067A43E /* CanvasConvertControl.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CanvasConvertControl.cpp; sourceTree = "<group>"; };
 		699DD78C2B5FD6080067A43E /* CanvasConvertControl.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CanvasConvertControl.hpp; sourceTree = "<group>"; };
+		69A4DB942B6A4D28003459BE /* ShapePanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapePanel.swift; sourceTree = "<group>"; };
 		69CE60AB2B6791B600FC7B50 /* CanvasController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasController.swift; sourceTree = "<group>"; };
 		F54001BDA0905C2EB7C3CB1F /* Pods-Poseidon.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Poseidon.release.xcconfig"; path = "Target Support Files/Pods-Poseidon/Pods-Poseidon.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -157,6 +159,7 @@
 			isa = PBXGroup;
 			children = (
 				692474962B5FAA2E003C91F3 /* PhotoEditor.swift */,
+				69A4DB942B6A4D28003459BE /* ShapePanel.swift */,
 			);
 			path = PhotoEditor;
 			sourceTree = "<group>";
@@ -359,6 +362,7 @@
 				699DD7862B5FC5E70067A43E /* ShapeElement.swift in Sources */,
 				699DD7842B5FC5760067A43E /* Element.swift in Sources */,
 				699DD78D2B5FD6080067A43E /* CanvasConvertControl.cpp in Sources */,
+				69A4DB952B6A4D28003459BE /* ShapePanel.swift in Sources */,
 				692474882B5FA876003C91F3 /* PoseidonApp.swift in Sources */,
 				699DD7892B5FD5150067A43E /* CanvasControl.swift in Sources */,
 				690BB64C2B68A337004764D3 /* ConvertElement.cpp in Sources */,
