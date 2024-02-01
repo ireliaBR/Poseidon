@@ -9,4 +9,5 @@ pod install
 open Poseidon.xcworkspace
 ```
 ## 部分界面
-
+### 添加图形
+![添加图形](./Doc/shape_edit.gif)
