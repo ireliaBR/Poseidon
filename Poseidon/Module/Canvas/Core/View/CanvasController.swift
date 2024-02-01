@@ -9,23 +9,40 @@ import Foundation
 import GLKit
 import SwiftUI
 import Combine
+import OpenGLES
 
 class MessageViewModel: ObservableObject {
     @Published var element: Element?
     @Published var cancelSelected: Bool?
 }
 
-class CanvasController: GLKViewController, SelectBackgroundViewDelegate {
+class CanvasController: UIViewController, SelectBackgroundViewDelegate {
     
     private var cancellables = Set<AnyCancellable>()
     let messageViewModel: MessageViewModel
     
     var selectBGView: SelectBackgroundView?
-    let canvasControl = CanvasControl()
+    lazy var canvasControl = CanvasControl()
     lazy var gestureView = {
         let view = UIView()
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapView(gesture:))))
         return view
+    }()
+    
+    let ctx = {
+        let ctx = EAGLContext(api: .openGLES3)
+        EAGLContext.setCurrent(ctx)
+        return ctx
+    }()
+    
+    let glkLayer = {
+        let layer = CAEAGLLayer()
+        layer.isOpaque = true
+        layer.drawableProperties = [
+            kEAGLDrawablePropertyRetainedBacking: false,
+            kEAGLDrawablePropertyColorFormat: kEAGLColorFormatRGBA8
+        ]
+        return layer
     }()
     
     var tapAction: (() -> Void)?
@@ -39,13 +56,24 @@ class CanvasController: GLKViewController, SelectBackgroundViewDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        glkLayer.frame = view.bounds;
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        canvasControl.viewPort(width: Int(view.frame.size.width), height: Int(view.frame.size.height))
+        ctx?.renderbufferStorage(Int(GL_RENDERBUFFER), from: glkLayer)
+        canvasControl.draw()
+        ctx?.presentRenderbuffer(Int(GL_RENDERBUFFER))
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        let glkView = self.view as! GLKView
-        glkView.context = EAGLContext(api: .openGLES3)!
-        glkView.drawableDepthFormat = .format24
-        EAGLContext.setCurrent(glkView.context)
         
+        view.layer.addSublayer(glkLayer)
         view.addSubview(gestureView)
         gestureView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -56,6 +84,9 @@ class CanvasController: GLKViewController, SelectBackgroundViewDelegate {
             .sink { [weak self] element in
                 if element != nil {
                     self?.canvasControl.addElement(element!)
+                    
+                    self?.canvasControl.draw()
+                    self?.ctx?.presentRenderbuffer(Int(GL_RENDERBUFFER))
                 }
             }
             .store(in: &cancellables)
@@ -67,11 +98,6 @@ class CanvasController: GLKViewController, SelectBackgroundViewDelegate {
                 }
             }
             .store(in: &cancellables)
-    }
-
-    override func glkView(_ view: GLKView, drawIn rect: CGRect) {
-        canvasControl.viewPort(width: view.drawableWidth, height: view.drawableHeight)
-        canvasControl.draw()
     }
     
     @objc func tapView(gesture: UITapGestureRecognizer) {

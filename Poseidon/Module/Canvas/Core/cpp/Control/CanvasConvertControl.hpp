@@ -18,8 +18,12 @@ private:
     float screenWidth;
     float screenHeight;
     
+    unsigned int FBO;
+    unsigned int RBO;
+    
 public:
-    void draw(const ConvertElement *array, size_t count);
+    CanvasConvertControl();
+    unsigned int draw(const ConvertElement *array, size_t count);
     void configScreen(float screenWidth, float screenHeight);
     unsigned int createProgram(const char *vsSource, const char *fsSource);
     unsigned int createVAO(const float *vertices, const long verticesLength, const int *indices, const long indicesLength);

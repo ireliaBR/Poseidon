@@ -13,15 +13,27 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+CanvasConvertControl::CanvasConvertControl() {
+    // 创建 Render Buffer Object
+    glGenRenderbuffers(1, &RBO);
+    glBindRenderbuffer(GL_RENDERBUFFER, RBO);
+    
+    // 创建 Frame Buffer Object
+    glGenFramebuffers(1, &FBO);
+    glBindFramebuffer(GL_FRAMEBUFFER, FBO);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, RBO);
+}
 
 void CanvasConvertControl::configScreen(float screenWidth, float screenHeight) {
     this->screenWidth = screenWidth;
     this->screenHeight = screenHeight;
 }
 
-void CanvasConvertControl::draw(const ConvertElement *array, size_t count) {
+unsigned int CanvasConvertControl::draw(const ConvertElement *array, size_t count) {
+    
+    glBindFramebuffer(GL_FRAMEBUFFER, FBO);
     glViewport(0, 0, screenWidth, screenHeight);
-    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
     
     // draw our first triangle
@@ -43,7 +55,7 @@ void CanvasConvertControl::draw(const ConvertElement *array, size_t count) {
         glBindVertexArray(element.VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
         glDrawElements(GL_TRIANGLES, element.renderCount, GL_UNSIGNED_INT, 0);
     }
-    
+    return RBO;
 }
 
 unsigned int CanvasConvertControl::createVAO(const float *vertices, const long verticesLength, const int *indices, const long indicesLength) {
