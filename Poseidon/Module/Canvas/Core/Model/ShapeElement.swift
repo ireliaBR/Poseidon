@@ -105,7 +105,7 @@ struct ShapeElement: Element {
         element.color[2] = Float(blue)
         element.color[3] = Float(alpha)
         
-        let sizeTrans = CATransform3DMakeScale(size.width * screenScale, size.height * screenScale, 1)
+        let sizeTrans = CATransform3DMakeScale(size.width * CanvasControl.scale, size.height * CanvasControl.scale, 1)
         
         let transform = CATransform3DConcat(sizeTrans, convertTransform)
         

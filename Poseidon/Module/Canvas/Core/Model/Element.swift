@@ -29,10 +29,6 @@ protocol Element {
 
 extension Element {
     
-    var screenScale: CGFloat {
-        UIScreen.main.scale
-    }
-    
     func ortho(left: CGFloat, right: CGFloat, bottom: CGFloat, top: CGFloat) -> CGAffineTransform {
         var ortho = CGAffineTransformIdentity
         ortho.a = (right - left) / 2
@@ -49,7 +45,7 @@ extension Element {
     }
     
     mutating func translate(tx: CGFloat, ty: CGFloat, tz: CGFloat) {
-        convertTransform = CATransform3DConcat(convertTransform, CATransform3DMakeTranslation(tx * screenScale, ty * screenScale, tz * screenScale))
+        convertTransform = CATransform3DConcat(convertTransform, CATransform3DMakeTranslation(tx * CanvasControl.scale, ty * CanvasControl.scale, tz * CanvasControl.scale))
         transform = CATransform3DConcat(transform, CATransform3DMakeTranslation(tx, ty, tz))
         //        convertTransform = CATransform3DTranslate(convertTransform, tx * screenScale, ty * screenScale, tz * screenScale)
         //                transform = CATransform3DTranslate(transform, tx, ty, tz)

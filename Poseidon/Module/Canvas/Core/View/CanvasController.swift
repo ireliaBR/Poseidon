@@ -29,15 +29,10 @@ class CanvasController: UIViewController, SelectBackgroundViewDelegate {
         return view
     }()
     
-    let ctx = {
-        let ctx = EAGLContext(api: .openGLES3)
-        EAGLContext.setCurrent(ctx)
-        return ctx
-    }()
-    
     let glkLayer = {
         let layer = CAEAGLLayer()
         layer.isOpaque = true
+        layer.contentsScale = CanvasControl.scale
         layer.drawableProperties = [
             kEAGLDrawablePropertyRetainedBacking: false,
             kEAGLDrawablePropertyColorFormat: kEAGLColorFormatRGBA8
@@ -64,10 +59,9 @@ class CanvasController: UIViewController, SelectBackgroundViewDelegate {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        canvasControl.viewPort(width: Int(view.frame.size.width), height: Int(view.frame.size.height))
-        ctx?.renderbufferStorage(Int(GL_RENDERBUFFER), from: glkLayer)
+        canvasControl.viewPort(width: Int(view.frame.size.width * CanvasControl.scale), height: Int(view.frame.size.height * CanvasControl.scale))
+        canvasControl.ctx?.renderbufferStorage(Int(GL_RENDERBUFFER), from: glkLayer)
         canvasControl.draw()
-        ctx?.presentRenderbuffer(Int(GL_RENDERBUFFER))
     }
     
     override func viewDidLoad() {
@@ -86,7 +80,6 @@ class CanvasController: UIViewController, SelectBackgroundViewDelegate {
                     self?.canvasControl.addElement(element!)
                     
                     self?.canvasControl.draw()
-                    self?.ctx?.presentRenderbuffer(Int(GL_RENDERBUFFER))
                 }
             }
             .store(in: &cancellables)
@@ -124,10 +117,12 @@ class CanvasController: UIViewController, SelectBackgroundViewDelegate {
    
     func operationSelectView(element: Element) {
         canvasControl.refreshElement(element)
+        canvasControl.draw()
     }
     
     func deleteBtnDidClick(element: Element) {
         canvasControl.deleteElement(element)
+        canvasControl.draw()
         selectBGView?.removeFromSuperview()
         selectBGView = nil
     }

@@ -6,13 +6,21 @@
 //
 
 import Foundation
+import GLKit
 
 class CanvasControl {
     
+    static var scale: CGFloat = 3
     static var screenWidth: CGFloat = 0
     static var screenHeight: CGFloat = 0
     
     var elements = [Element]()
+    
+    let ctx = {
+        let ctx = EAGLContext(api: .openGLES3)
+        EAGLContext.setCurrent(ctx)
+        return ctx
+    }()
     
     private var convertControl = CanvasConvertControl()
     
@@ -26,6 +34,7 @@ class CanvasControl {
         let convertElements = elements.map { $0.convertModel() }
         let point = convertElements.withUnsafeBufferPointer { UnsafePointer<ConvertElement>($0.baseAddress) }
         convertControl.draw(point, elements.count)
+        ctx?.presentRenderbuffer(Int(GL_RENDERBUFFER))
     }
     
     func refreshElement(_ element: Element) {

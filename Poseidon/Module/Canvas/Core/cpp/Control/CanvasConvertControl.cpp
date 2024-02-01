@@ -33,7 +33,7 @@ unsigned int CanvasConvertControl::draw(const ConvertElement *array, size_t coun
     
     glBindFramebuffer(GL_FRAMEBUFFER, FBO);
     glViewport(0, 0, screenWidth, screenHeight);
-    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
     
     // draw our first triangle

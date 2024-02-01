@@ -50,7 +50,7 @@ struct ShapePanel: View {
                     Button(action: {
                         var element = ShapeElement.square()
                         element.color = currentColor
-                        element.translate(tx: CanvasControl.screenWidth / 2 / element.screenScale, ty: CanvasControl.screenHeight / 2 / element.screenScale, tz: 0)
+                        element.translate(tx: CanvasControl.screenWidth / 2 / CanvasControl.scale, ty: CanvasControl.screenHeight / 2 / CanvasControl.scale, tz: 0)
                         messageViewModel.element = element
                         withAnimation(.easeIn) {
                             currentSelectedType = .none
@@ -64,7 +64,7 @@ struct ShapePanel: View {
                     Button(action: {
                         var element = ShapeElement.triangle()
                         element.color = currentColor
-                        element.translate(tx: CanvasControl.screenWidth / 2 / element.screenScale, ty: CanvasControl.screenHeight / 2 / element.screenScale, tz: 0)
+                        element.translate(tx: CanvasControl.screenWidth / 2 / CanvasControl.scale, ty: CanvasControl.screenHeight / 2 / CanvasControl.scale, tz: 0)
                         messageViewModel.element = element
                         withAnimation(.easeIn) {
                             currentSelectedType = .none
