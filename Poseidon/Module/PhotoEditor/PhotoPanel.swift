@@ -19,6 +19,10 @@ struct PhotoPanel: View {
             LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 0), count: 3), spacing: 10) {
                 ForEach(images, id: \.self) { item in
                     Button(action: {
+                        var element = ImageElement.image(item)
+                        element.translate(tx: CanvasControl.screenWidth / 2 / CanvasControl.scale, ty: CanvasControl.screenHeight / 2 / CanvasControl.scale, tz: 0)
+                        messageViewModel.element = element
+                        
                         withAnimation(.easeIn) {
                             currentSelectedType = .none
                         }

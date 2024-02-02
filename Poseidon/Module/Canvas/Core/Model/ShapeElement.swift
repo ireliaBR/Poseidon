@@ -93,11 +93,11 @@ struct ShapeElement: Element {
             let fsSource = try! String(contentsOfFile: fsPath, encoding: .utf8).utf8CString
             let vsPointer = vsSource.withUnsafeBufferPointer { UnsafePointer<CChar>($0.baseAddress) }
             let fsPointer = fsSource.withUnsafeBufferPointer { UnsafePointer<CChar>($0.baseAddress) }
-            program = CanvasConvertControl.createProgram(vsPointer, fsPointer)
+            program = CanvasRenderData.createProgram(vsPointer, fsPointer)
         }
         
         if VAO == nil {
-            VAO = CanvasConvertControl.createVAO(&vertices, MemoryLayout<Float>.size * vertices.count, &indices, MemoryLayout<Int32>.size * indices.count)
+            VAO = CanvasRenderData.createShapeVAO(&vertices, MemoryLayout<Float>.size * vertices.count, &indices, MemoryLayout<Int32>.size * indices.count)
         }
     }
     
@@ -106,6 +106,8 @@ struct ShapeElement: Element {
         let convertId = identifier.utf8CString
         let idPointer = convertId.withUnsafeBufferPointer { UnsafePointer<CChar>($0.baseAddress) }
         element.identifier = idPointer
+        element.type = Shape
+        
         element.VAO = VAO ?? 0
         element.program = program ?? 0
         element.renderCount = UInt32(indices.count)

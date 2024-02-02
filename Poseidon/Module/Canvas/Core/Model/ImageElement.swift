@@ -21,27 +21,35 @@ struct ImageElement: Element {
     
     var vertices: [Float]
     var indices: [Int32]
+    var texCoords: [Float]
     
     var VAO: UInt32?
     var program: UInt32?
     var texture: UInt32?
-    var shaderName: String = "Shape"
+    var shaderName: String = "Image"
     
-//    static let image = {
-//        let vertices: [Float] = [
-//            0.5,  0.5, 0.0,  // top right
-//            0.5, -0.5, 0.0,  // bottom right
-//            -0.5, -0.5, 0.0,  // bottom left
-//            -0.5,  0.5, 0.0,  // top left
-//        ]
-//        let indices: [Int32] = [
-//            0, 1, 3,  // first Triangle
-//            1, 2, 3,   // second Triangle
-//        ]
-//        var element = ImageElement(size: CGSize(width: 150, height: 150), color: .red, vertices: vertices, indices: indices)
-//        return element
-//    }
-//    
+    static func image(_ image: UIImage) -> ImageElement {
+        let vertices: [Float] = [
+            0.5,  0.5, 0.0,  // top right
+            0.5, -0.5, 0.0,  // bottom right
+            -0.5, -0.5, 0.0,  // bottom left
+            -0.5,  0.5, 0.0,  // top left
+        ]
+        let indices: [Int32] = [
+            0, 1, 3,  // first Triangle
+            1, 2, 3,   // second Triangle
+        ]
+        let texCoords: [Float] = [
+            // texture coords
+            1.0, 1.0, // top right
+            1.0, 0.0, // bottom right
+            0.0, 0.0, // bottom left
+            0.0, 1.0  // top left
+        ]
+        let element = ImageElement(size: CGSize(width: 150, height: 150), image: image, vertices: vertices, indices: indices, texCoords: texCoords)
+        return element
+    }
+    
     func inside(point: CGPoint) -> Bool {
         let sizeTrans = CGAffineTransform(scaleX: size.width, y: size.height)
         let affineModel = CGAffineTransform(a: CGFloat(transform.m11),
@@ -74,7 +82,47 @@ struct ImageElement: Element {
     }
     
     mutating func initialRenderData() {
+        if program == nil {
+            let vsPath = Bundle.main.path(forResource: shaderName, ofType: "vs")!
+            let fsPath = Bundle.main.path(forResource: shaderName, ofType: "fs")!
+            let vsSource = try! String(contentsOfFile: vsPath, encoding: .utf8).utf8CString
+            let fsSource = try! String(contentsOfFile: fsPath, encoding: .utf8).utf8CString
+            let vsPointer = vsSource.withUnsafeBufferPointer { UnsafePointer<CChar>($0.baseAddress) }
+            let fsPointer = fsSource.withUnsafeBufferPointer { UnsafePointer<CChar>($0.baseAddress) }
+            program = CanvasRenderData.createProgram(vsPointer, fsPointer)
+        }
         
+        if VAO == nil {
+            VAO = CanvasRenderData.createImageVAO(&vertices, MemoryLayout<Float>.size * vertices.count, &indices, MemoryLayout<Int32>.size * indices.count, &texCoords, MemoryLayout<Float>.size * texCoords.count)
+        }
+        
+        if texture == nil {
+            let image = convertImageData()
+            texture = CanvasRenderData.createTexture(image.0, Int32(image.1), Int32(image.2))
+            free(image.0)
+        }
+    }
+    
+    func convertImageData() -> (UnsafeMutableRawPointer, UInt32, UInt32) {
+        let cgImageRef = image.cgImage
+        let width = GLuint(cgImageRef!.width)
+        let height = GLuint(cgImageRef!.height)
+        let rect = CGRect(x: 0, y: 0, width: CGFloat(width), height: CGFloat(height))
+
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        let imageData = UnsafeMutableRawPointer.allocate(byteCount: Int(width * height) * 4, alignment: 1)
+        let context = CGContext(data: imageData,
+                                width: Int(width),
+                                height: Int(height),
+                                bitsPerComponent: 8,
+                                bytesPerRow: Int(width) * 4,
+                                space: colorSpace,
+                                bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue | CGBitmapInfo.byteOrder32Big.rawValue)
+        context?.translateBy(x: 0, y: CGFloat(height))
+        context?.scaleBy(x: 1.0, y: -1.0)
+        context?.clear(rect)
+        context?.draw(cgImageRef!, in: rect)
+        return (imageData, width, height)
     }
     
     func convertModel() -> ConvertElement {
@@ -82,21 +130,12 @@ struct ImageElement: Element {
         let convertId = identifier.utf8CString
         let idPointer = convertId.withUnsafeBufferPointer { UnsafePointer<CChar>($0.baseAddress) }
         element.identifier = idPointer
+        element.type = Image
+        
         element.VAO = VAO ?? 0
         element.program = program ?? 0
         element.renderCount = UInt32(indices.count)
-        element.color = glm.vec4()
-        // 定义变量来存储 RGBA 值
-        var red: CGFloat = 0
-        var green: CGFloat = 0
-        var blue: CGFloat = 0
-        var alpha: CGFloat = 0
-        // 获取颜色的 RGBA 值
-//        color.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
-//        element.color[0] = Float(red)
-//        element.color[1] = Float(green)
-//        element.color[2] = Float(blue)
-//        element.color[3] = Float(alpha)
+        element.texture = texture ?? 0
         
         let sizeTrans = CATransform3DMakeScale(size.width * CanvasControl.scale, size.height * CanvasControl.scale, 1)
         
