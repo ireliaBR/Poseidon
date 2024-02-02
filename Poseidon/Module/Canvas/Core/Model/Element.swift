@@ -16,15 +16,12 @@ protocol Element {
     var convertTransform: CATransform3D { get set }
     var size: CGSize { get set }
     
-    var VAO: UInt32? { get set }
-    var program: UInt32? { get set }
-    var shaderName: String { get set }
-    
     var vertices: [Float] { get set }
     var indices: [Int32] { get set }
     
     func inside(point: CGPoint) -> Bool
     func convertModel() -> ConvertElement
+    mutating func initialRenderData()
 }
 
 extension Element {

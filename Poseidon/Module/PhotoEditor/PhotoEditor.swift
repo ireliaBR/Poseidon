@@ -12,7 +12,9 @@ struct PhotoEditor: View {
     @State var yOffset: CGFloat = 134
     @State var currentSelectedType: HomePanel.ButtonType = .none {
         didSet {
-            yOffset = currentSelectedType == .none ? 134 : 0
+            withAnimation(.easeOut) {
+                yOffset = currentSelectedType == .none ? 134 : 0
+            }
         }
     }
     
@@ -41,6 +43,15 @@ struct PhotoEditor: View {
                 
             }
             .opacity(currentSelectedType == .shape ? 1.0 : 0.0)
+            VStack {
+                Spacer()
+                PhotoPanel(currentSelectedType: $currentSelectedType)
+                .frame(maxWidth: .infinity, maxHeight: 400)
+                .background(.white)
+                .offset(y: yOffset)
+                
+            }
+            .opacity(currentSelectedType == .photo ? 1.0 : 0.0)
         }
         .edgesIgnoringSafeArea(.bottom)
     }

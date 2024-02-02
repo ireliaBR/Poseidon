@@ -25,8 +25,8 @@ public:
     CanvasConvertControl();
     unsigned int draw(const ConvertElement *array, size_t count);
     void configScreen(float screenWidth, float screenHeight);
-    unsigned int createProgram(const char *vsSource, const char *fsSource);
-    unsigned int createVAO(const float *vertices, const long verticesLength, const int *indices, const long indicesLength);
+    static unsigned int createProgram(const char *vsSource, const char *fsSource);
+    static unsigned int createVAO(const float *vertices, const long verticesLength, const int *indices, const long indicesLength);
 };
 
 #endif /* CanvasConvertControl_hpp */

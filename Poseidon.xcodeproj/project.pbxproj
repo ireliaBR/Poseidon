@@ -15,6 +15,7 @@
 		6924748C2B5FA877003C91F3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6924748B2B5FA877003C91F3 /* Assets.xcassets */; };
 		6924748F2B5FA877003C91F3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6924748E2B5FA877003C91F3 /* Preview Assets.xcassets */; };
 		692474972B5FAA2E003C91F3 /* PhotoEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692474962B5FAA2E003C91F3 /* PhotoEditor.swift */; };
+		69975A8F2B6CC1DF00A7094A /* ImageElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69975A8E2B6CC1DF00A7094A /* ImageElement.swift */; };
 		699DD7842B5FC5760067A43E /* Element.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699DD7832B5FC5760067A43E /* Element.swift */; };
 		699DD7862B5FC5E70067A43E /* ShapeElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699DD7852B5FC5E70067A43E /* ShapeElement.swift */; };
 		699DD7892B5FD5150067A43E /* CanvasControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699DD7882B5FD5150067A43E /* CanvasControl.swift */; };
@@ -23,6 +24,7 @@
 		69CE60A82B67910200FC7B50 /* Shape.vs in Resources */ = {isa = PBXBuildFile; fileRef = 695876732B6785D800F2C6AC /* Shape.vs */; };
 		69CE60A92B67910400FC7B50 /* Shape.fs in Resources */ = {isa = PBXBuildFile; fileRef = 695876742B6785EA00F2C6AC /* Shape.fs */; };
 		69CE60AC2B6791B600FC7B50 /* CanvasController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69CE60AB2B6791B600FC7B50 /* CanvasController.swift */; };
+		69E3AD8C2B6C943500503B97 /* PhotoPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69E3AD8B2B6C943500503B97 /* PhotoPanel.swift */; };
 		DC8A956AFB9C1C7BEF2B0183 /* Pods_Poseidon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FC14CE0C741BD9DEEBA4612 /* Pods_Poseidon.framework */; };
 /* End PBXBuildFile section */
 
@@ -41,6 +43,7 @@
 		692474962B5FAA2E003C91F3 /* PhotoEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoEditor.swift; sourceTree = "<group>"; };
 		695876732B6785D800F2C6AC /* Shape.vs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Shape.vs; sourceTree = "<group>"; };
 		695876742B6785EA00F2C6AC /* Shape.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Shape.fs; sourceTree = "<group>"; };
+		69975A8E2B6CC1DF00A7094A /* ImageElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageElement.swift; sourceTree = "<group>"; };
 		699DD7832B5FC5760067A43E /* Element.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Element.swift; sourceTree = "<group>"; };
 		699DD7852B5FC5E70067A43E /* ShapeElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeElement.swift; sourceTree = "<group>"; };
 		699DD7882B5FD5150067A43E /* CanvasControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasControl.swift; sourceTree = "<group>"; };
@@ -49,6 +52,7 @@
 		699DD78C2B5FD6080067A43E /* CanvasConvertControl.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CanvasConvertControl.hpp; sourceTree = "<group>"; };
 		69A4DB942B6A4D28003459BE /* ShapePanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapePanel.swift; sourceTree = "<group>"; };
 		69CE60AB2B6791B600FC7B50 /* CanvasController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasController.swift; sourceTree = "<group>"; };
+		69E3AD8B2B6C943500503B97 /* PhotoPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPanel.swift; sourceTree = "<group>"; };
 		F54001BDA0905C2EB7C3CB1F /* Pods-Poseidon.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Poseidon.release.xcconfig"; path = "Target Support Files/Pods-Poseidon/Pods-Poseidon.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -160,6 +164,7 @@
 			children = (
 				692474962B5FAA2E003C91F3 /* PhotoEditor.swift */,
 				69A4DB942B6A4D28003459BE /* ShapePanel.swift */,
+				69E3AD8B2B6C943500503B97 /* PhotoPanel.swift */,
 			);
 			path = PhotoEditor;
 			sourceTree = "<group>";
@@ -208,6 +213,7 @@
 			children = (
 				699DD7832B5FC5760067A43E /* Element.swift */,
 				699DD7852B5FC5E70067A43E /* ShapeElement.swift */,
+				69975A8E2B6CC1DF00A7094A /* ImageElement.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -355,12 +361,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				6904DCFC2B69EF9C008E22D5 /* CGPoint+Additional.swift in Sources */,
+				69E3AD8C2B6C943500503B97 /* PhotoPanel.swift in Sources */,
 				692474972B5FAA2E003C91F3 /* PhotoEditor.swift in Sources */,
 				69CE60AC2B6791B600FC7B50 /* CanvasController.swift in Sources */,
 				6904DCF72B68F3E9008E22D5 /* SelectBackgroundView.swift in Sources */,
 				6924748A2B5FA876003C91F3 /* ContentView.swift in Sources */,
 				699DD7862B5FC5E70067A43E /* ShapeElement.swift in Sources */,
 				699DD7842B5FC5760067A43E /* Element.swift in Sources */,
+				69975A8F2B6CC1DF00A7094A /* ImageElement.swift in Sources */,
 				699DD78D2B5FD6080067A43E /* CanvasConvertControl.cpp in Sources */,
 				69A4DB952B6A4D28003459BE /* ShapePanel.swift in Sources */,
 				692474882B5FA876003C91F3 /* PoseidonApp.swift in Sources */,
@@ -510,6 +518,9 @@
 					"GLES_SILENCE_DEPRECATION=1",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "访问照片";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "访问照片";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -550,6 +561,9 @@
 					"GLES_SILENCE_DEPRECATION=1",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "访问照片";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "访问照片";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

@@ -49,20 +49,7 @@ class CanvasControl {
     
     func addElement(_ element: Element) {
         var copyElement = element
-        if copyElement.program == nil {
-            let vsPath = Bundle.main.path(forResource: element.shaderName, ofType: "vs")!
-            let fsPath = Bundle.main.path(forResource: element.shaderName, ofType: "fs")!
-            let vsSource = try! String(contentsOfFile: vsPath, encoding: .utf8).utf8CString
-            let fsSource = try! String(contentsOfFile: fsPath, encoding: .utf8).utf8CString
-            let vsPointer = vsSource.withUnsafeBufferPointer { UnsafePointer<CChar>($0.baseAddress) }
-            let fsPointer = fsSource.withUnsafeBufferPointer { UnsafePointer<CChar>($0.baseAddress) }
-            copyElement.program = convertControl.createProgram(vsPointer, fsPointer)
-        }
-        
-        if copyElement.VAO == nil {
-            copyElement.VAO = convertControl.createVAO(&copyElement.vertices, MemoryLayout<Float>.size * copyElement.vertices.count, &copyElement.indices, MemoryLayout<Int32>.size * copyElement.indices.count)
-        }
-        
+        copyElement.initialRenderData()
         elements.append(copyElement)
     }
 }
