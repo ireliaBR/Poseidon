@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import OpenGLES
 
 struct ImageElement: Element {
     
@@ -97,11 +98,61 @@ struct ImageElement: Element {
         }
         
         if texture == nil {
-            let image = convertImageData()
-            texture = CanvasRenderData.createTexture(image.0, Int32(image.1), Int32(image.2))
-            free(image.0)
+//            let image = convertImageData()
+//            texture = CanvasRenderData.createTexture(image.0, Int32(image.1), Int32(image.2))
+//            free(image.0)
+            texture = loadTexture(image: image)
         }
     }
+    
+    func loadTexture(image: UIImage) -> GLuint? {
+            guard let cgImage = image.cgImage else {
+                print("Failed to convert UIImage to CGImage.")
+                return nil
+            }
+
+            let width = GLsizei(cgImage.width)
+            let height = GLsizei(cgImage.height)
+
+            var textureID: GLuint = 0
+            glGenTextures(1, &textureID)
+            glBindTexture(GLenum(GL_TEXTURE_2D), textureID)
+
+            glTexParameteri(GLenum(GL_TEXTURE_2D), GLenum(GL_TEXTURE_MIN_FILTER), GL_LINEAR)
+            glTexParameteri(GLenum(GL_TEXTURE_2D), GLenum(GL_TEXTURE_MAG_FILTER), GL_LINEAR)
+            glTexParameteri(GLenum(GL_TEXTURE_2D), GLenum(GL_TEXTURE_WRAP_S), GL_CLAMP_TO_EDGE)
+
+            guard let imageData = calloc(Int(width * height) * 4, MemoryLayout<GLubyte>.size) else {
+                print("Failed to allocate memory for image data.")
+                return nil
+            }
+
+            let context = CGContext(data: imageData,
+                                    width: Int(width),
+                                    height: Int(height),
+                                    bitsPerComponent: 8,
+                                    bytesPerRow: Int(width) * 4,
+                                    space: CGColorSpaceCreateDeviceRGB(),
+                                    bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue | CGBitmapInfo.byteOrder32Big.rawValue)
+        context?.translateBy(x: 0, y: CGFloat(height))
+        context?.scaleBy(x: 1.0, y: -1.0)
+            context?.draw(cgImage, in: CGRect(x: 0, y: 0, width: CGFloat(width), height: CGFloat(height)))
+
+            glTexImage2D(GLenum(GL_TEXTURE_2D),
+                         0,
+                         GL_RGBA,
+                         width,
+                         height,
+                         0,
+                         GLenum(GL_RGBA),
+                         GLenum(GL_UNSIGNED_BYTE),
+                         imageData)
+
+            glBindTexture(GLenum(GL_TEXTURE_2D), 0)
+            free(imageData)
+
+            return textureID
+        }
     
     func convertImageData() -> (UnsafeMutableRawPointer, UInt32, UInt32) {
         let cgImageRef = image.cgImage
