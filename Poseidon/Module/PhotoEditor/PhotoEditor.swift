@@ -21,37 +21,39 @@ struct PhotoEditor: View {
     var body: some View {
         ZStack {
             VStack {
-                CanvasView(tapAction: {
-                    withAnimation(.easeIn) {
-                        currentSelectedType = .none
-                    }
-                })
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-//                CanvasVieww()
+//                CanvasView(tapAction: {
+//                    withAnimation(.easeIn) {
+//                        currentSelectedType = .none
+//                    }
+//                })
+//                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                CanvasVieww()
                 HomePanel { type in
                     withAnimation(.easeIn) {
                         currentSelectedType = type
                     }
                 }
             }
-            VStack {
-                Spacer()
-                ShapePanel(currentSelectedType: $currentSelectedType)
-                .frame(maxWidth: .infinity, maxHeight: 134)
-                .background(.white)
-                .offset(y: yOffset)
-                
+            if currentSelectedType == .shape {
+                VStack {
+                    Spacer()
+                    ShapePanel(currentSelectedType: $currentSelectedType)
+                    .frame(maxWidth: .infinity, maxHeight: 134)
+                    .background(.white)
+                    .offset(y: yOffset)
+                    
+                }
             }
-            .opacity(currentSelectedType == .shape ? 1.0 : 0.0)
-            VStack {
-                Spacer()
-                PhotoPanel(currentSelectedType: $currentSelectedType)
-                .frame(maxWidth: .infinity, maxHeight: 400)
-                .background(.white)
-                .offset(y: yOffset)
-                
+            if currentSelectedType == .photo {
+                VStack {
+                    Spacer()
+                    PhotoPanel(currentSelectedType: $currentSelectedType)
+                    .frame(maxWidth: .infinity, maxHeight: 400)
+                    .background(.white)
+                    .offset(y: yOffset)
+                    
+                }
             }
-            .opacity(currentSelectedType == .photo ? 1.0 : 0.0)
         }
         .edgesIgnoringSafeArea(.bottom)
     }

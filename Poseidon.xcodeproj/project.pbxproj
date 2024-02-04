@@ -18,6 +18,9 @@
 		69940B562B6F356900D98032 /* ElementRenderBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 69940B542B6F356900D98032 /* ElementRenderBuffer.cpp */; };
 		69940B5A2B6F5BE300D98032 /* FilterManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 69940B582B6F5BE300D98032 /* FilterManager.cpp */; };
 		69940B5D2B6F5CFA00D98032 /* BaseFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 69940B5B2B6F5CFA00D98032 /* BaseFilter.cpp */; };
+		69940B5F2B6F890B00D98032 /* SelectImagePanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69940B5E2B6F890B00D98032 /* SelectImagePanel.swift */; };
+		69940B612B6F8F0500D98032 /* FilterPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69940B602B6F8F0500D98032 /* FilterPanel.swift */; };
+		69940B642B6F8FC500D98032 /* GrayFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 69940B622B6F8FC500D98032 /* GrayFilter.cpp */; };
 		69975A8F2B6CC1DF00A7094A /* ImageElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69975A8E2B6CC1DF00A7094A /* ImageElement.swift */; };
 		69975A962B6CD29600A7094A /* CanvasRenderData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 69975A942B6CD29600A7094A /* CanvasRenderData.cpp */; };
 		69975A972B6CD9F100A7094A /* Image.vs in Resources */ = {isa = PBXBuildFile; fileRef = 69975A922B6CD1AC00A7094A /* Image.vs */; };
@@ -55,6 +58,10 @@
 		69940B592B6F5BE300D98032 /* FilterManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FilterManager.hpp; sourceTree = "<group>"; };
 		69940B5B2B6F5CFA00D98032 /* BaseFilter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BaseFilter.cpp; sourceTree = "<group>"; };
 		69940B5C2B6F5CFA00D98032 /* BaseFilter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BaseFilter.hpp; sourceTree = "<group>"; };
+		69940B5E2B6F890B00D98032 /* SelectImagePanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectImagePanel.swift; sourceTree = "<group>"; };
+		69940B602B6F8F0500D98032 /* FilterPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPanel.swift; sourceTree = "<group>"; };
+		69940B622B6F8FC500D98032 /* GrayFilter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GrayFilter.cpp; sourceTree = "<group>"; };
+		69940B632B6F8FC500D98032 /* GrayFilter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GrayFilter.hpp; sourceTree = "<group>"; };
 		69975A8E2B6CC1DF00A7094A /* ImageElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageElement.swift; sourceTree = "<group>"; };
 		69975A922B6CD1AC00A7094A /* Image.vs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Image.vs; sourceTree = "<group>"; };
 		69975A932B6CD1AC00A7094A /* Image.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Image.fs; sourceTree = "<group>"; };
@@ -186,6 +193,8 @@
 				69940B592B6F5BE300D98032 /* FilterManager.hpp */,
 				69940B5B2B6F5CFA00D98032 /* BaseFilter.cpp */,
 				69940B5C2B6F5CFA00D98032 /* BaseFilter.hpp */,
+				69940B622B6F8FC500D98032 /* GrayFilter.cpp */,
+				69940B632B6F8FC500D98032 /* GrayFilter.hpp */,
 			);
 			path = Filter;
 			sourceTree = "<group>";
@@ -214,6 +223,8 @@
 				692474962B5FAA2E003C91F3 /* PhotoEditor.swift */,
 				69A4DB942B6A4D28003459BE /* ShapePanel.swift */,
 				69E3AD8B2B6C943500503B97 /* PhotoPanel.swift */,
+				69940B5E2B6F890B00D98032 /* SelectImagePanel.swift */,
+				69940B602B6F8F0500D98032 /* FilterPanel.swift */,
 			);
 			path = PhotoEditor;
 			sourceTree = "<group>";
@@ -417,6 +428,7 @@
 				69E3AD8C2B6C943500503B97 /* PhotoPanel.swift in Sources */,
 				692474972B5FAA2E003C91F3 /* PhotoEditor.swift in Sources */,
 				69CE60AC2B6791B600FC7B50 /* CanvasController.swift in Sources */,
+				69940B5F2B6F890B00D98032 /* SelectImagePanel.swift in Sources */,
 				6904DCF72B68F3E9008E22D5 /* SelectBackgroundView.swift in Sources */,
 				69975A962B6CD29600A7094A /* CanvasRenderData.cpp in Sources */,
 				6924748A2B5FA876003C91F3 /* ContentView.swift in Sources */,
@@ -425,6 +437,8 @@
 				699DD7842B5FC5760067A43E /* Element.swift in Sources */,
 				69975A8F2B6CC1DF00A7094A /* ImageElement.swift in Sources */,
 				699DD78D2B5FD6080067A43E /* CanvasConvertControl.cpp in Sources */,
+				69940B612B6F8F0500D98032 /* FilterPanel.swift in Sources */,
+				69940B642B6F8FC500D98032 /* GrayFilter.cpp in Sources */,
 				69A4DB952B6A4D28003459BE /* ShapePanel.swift in Sources */,
 				69940B562B6F356900D98032 /* ElementRenderBuffer.cpp in Sources */,
 				692474882B5FA876003C91F3 /* PoseidonApp.swift in Sources */,

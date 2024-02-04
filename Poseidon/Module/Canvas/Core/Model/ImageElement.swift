@@ -176,7 +176,7 @@ void main()
 """.utf8CString
         let vsPointer = vs.withUnsafeBufferPointer { UnsafePointer<CChar>($0.baseAddress) }
         let fsPointer = fs.withUnsafeBufferPointer { UnsafePointer<CChar>($0.baseAddress) }
-        var filter = BaseFilter(vsPointer, fsPointer)
+        let filter = BaseFilter(vsPointer, fsPointer)
         filters.append(filter)
     }
     

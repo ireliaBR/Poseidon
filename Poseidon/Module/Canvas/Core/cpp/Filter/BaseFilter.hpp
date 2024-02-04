@@ -17,6 +17,7 @@ private:
     
 public:
     unsigned int program;
+    BaseFilter();
     BaseFilter(const char *vs, const char *fs);
     void configUniform();
 };

@@ -8,6 +8,10 @@
 #include "BaseFilter.hpp"
 #include "CanvasRenderData.hpp"
 
+BaseFilter::BaseFilter() {
+    
+}
+
 BaseFilter::BaseFilter(const char *vs, const char *fs) {
     this->vs = vs;
     this->fs = fs;
