@@ -52,6 +52,10 @@ struct ShapeElement: Element {
         return element
     }
     
+    func renderFilter(_ manager: FilterManager) {
+        
+    }
+    
     func inside(point: CGPoint) -> Bool {
         let sizeTrans = CGAffineTransform(scaleX: size.width, y: size.height)
         let affineModel = CGAffineTransform(a: CGFloat(transform.m11),
@@ -91,11 +95,15 @@ struct ShapeElement: Element {
             let fsSource = try! String(contentsOfFile: fsPath, encoding: .utf8).utf8CString
             let vsPointer = vsSource.withUnsafeBufferPointer { UnsafePointer<CChar>($0.baseAddress) }
             let fsPointer = fsSource.withUnsafeBufferPointer { UnsafePointer<CChar>($0.baseAddress) }
-            CanvasRenderData.createProgram(&renderBuffer, vsPointer, fsPointer)
+            CanvasRenderData.createProgram(&renderBuffer.program, vsPointer, fsPointer)
         }
         
         if renderBuffer.VAO == 0 {
-            CanvasRenderData.createShapeVAO(&renderBuffer, &vertices, MemoryLayout<Float>.size * vertices.count, &indices, MemoryLayout<Int32>.size * indices.count)
+            var VBO: UInt32 = 0
+            CanvasRenderData.createShapeVAO(&renderBuffer.VAO, &VBO, &renderBuffer.EBO, &vertices, MemoryLayout<Float>.size * vertices.count, &indices, MemoryLayout<Int32>.size * indices.count)
+            renderBuffer.VBOCount = 1
+            renderBuffer.VBOs = UnsafeMutablePointer<UInt32>.allocate(capacity: 1)
+            renderBuffer.VBOs[0] = VBO
         }
     }
     

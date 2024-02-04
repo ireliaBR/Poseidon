@@ -23,6 +23,7 @@ class CanvasControl {
     }()
     
     private var convertControl = CanvasConvertControl()
+    private var filterManager = FilterManager()
     
     func viewPort(width: Int, height: Int) {
         CanvasControl.screenWidth = CGFloat(width)
@@ -44,12 +45,15 @@ class CanvasControl {
     }
     
     func deleteElement(_ element: Element) {
+        var element = element;
+        CanvasRenderData.releaseRenderBuffer(&element.renderBuffer)
         elements.removeAll { $0.identifier == element.identifier }
     }
     
     func addElement(_ element: Element) {
         var copyElement = element
         copyElement.initialRenderData()
+        copyElement.renderFilter(filterManager)
         elements.append(copyElement)
     }
 }

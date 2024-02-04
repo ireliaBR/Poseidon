@@ -18,7 +18,8 @@ public:
     unsigned int EBO;
     
     unsigned int program;
-    unsigned int texture;
+    unsigned int originTexture;
+    unsigned int targetTexture;
     
     ElementRenderBuffer();
 };

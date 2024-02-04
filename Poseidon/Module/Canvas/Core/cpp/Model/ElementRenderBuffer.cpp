@@ -6,6 +6,7 @@
 //
 
 #include "ElementRenderBuffer.hpp"
+#include "CanvasRenderData.hpp"
 
 ElementRenderBuffer::ElementRenderBuffer() {
     VAO = 0;
@@ -13,5 +14,6 @@ ElementRenderBuffer::ElementRenderBuffer() {
     VBOCount = 0;
     EBO = 0;
     program = 0;
-    texture = 0;
+    originTexture = 0;
+    targetTexture = 0;
 }

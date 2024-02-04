@@ -16,6 +16,10 @@ protocol Element {
     var convertTransform: CATransform3D { get set }
     var size: CGSize { get set }
     
+    var renderBuffer: ElementRenderBuffer { get set }
+    
+    mutating func renderFilter(_ manager: FilterManager)
+    
     func inside(point: CGPoint) -> Bool
     func convertModel() -> ConvertElement
     mutating func initialRenderData()

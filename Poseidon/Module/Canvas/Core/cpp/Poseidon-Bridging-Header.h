@@ -6,3 +6,5 @@
 #include "CanvasRenderData.hpp"
 #include "ConvertElement.hpp"
 #include "CanvasRenderData.hpp"
+#include "FilterManager.hpp"
+#include "BaseFilter.hpp"
