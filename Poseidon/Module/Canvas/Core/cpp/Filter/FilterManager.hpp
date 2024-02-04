@@ -35,7 +35,7 @@ private:
         0.0f, 1.0f  // top left
     };
     
-    unsigned int indices[6] = {
+    int indices[6] = {
         0, 1, 3, // first triangle
         1, 2, 3  // second triangle
     };

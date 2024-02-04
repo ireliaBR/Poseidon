@@ -46,7 +46,7 @@ class CanvasControl {
     
     func deleteElement(_ element: Element) {
         var element = element;
-        CanvasRenderData.releaseRenderBuffer(&element.renderBuffer)
+        element.release()
         elements.removeAll { $0.identifier == element.identifier }
     }
     

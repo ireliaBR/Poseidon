@@ -19,6 +19,7 @@ protocol Element {
     var renderBuffer: ElementRenderBuffer { get set }
     
     mutating func renderFilter(_ manager: FilterManager)
+    mutating func release()
     
     func inside(point: CGPoint) -> Bool
     func convertModel() -> ConvertElement

@@ -7,6 +7,7 @@
 
 #include "FilterManager.hpp"
 #include <OpenGLES/ES3/gl.h>
+#include "CanvasRenderData.hpp"
 
 FilterManager::FilterManager() {
     // FBO
@@ -50,6 +51,7 @@ FilterManager::~FilterManager() {
 }
 
 unsigned int FilterManager::filterChain(unsigned int texture, int width, int height, BaseFilter *filters, int filterCount) {
+    CanvasRenderData::createImageVAO(VAO, VBOs[0], VBOs[1], EBO, vertices, sizeof(vertices), indices, sizeof(indices), texCoords, sizeof(texCoords));
     unsigned int previousTexture = texture;
     for (int i = 0; i < filterCount; i++) {
         unsigned int tmpTexture = filter(previousTexture, width, height, filters[i]);
@@ -58,6 +60,9 @@ unsigned int FilterManager::filterChain(unsigned int texture, int width, int hei
         }
         previousTexture = tmpTexture;
     }
+    glDeleteVertexArrays(1, &VAO);
+    glDeleteBuffers(2, VBOs);
+    glDeleteBuffers(1, &EBO);
     return previousTexture;
 }
 
@@ -88,5 +93,7 @@ unsigned int FilterManager::filter(unsigned int texture, int width, int height, 
     glBindTexture(GL_TEXTURE_2D, texture);
     glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
     return tmpTexture;
 }

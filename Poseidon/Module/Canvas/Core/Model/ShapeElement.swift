@@ -56,6 +56,10 @@ struct ShapeElement: Element {
         
     }
     
+    mutating func release() {
+        CanvasRenderData.releaseRenderBuffer(&renderBuffer)
+    }
+    
     func inside(point: CGPoint) -> Bool {
         let sizeTrans = CGAffineTransform(scaleX: size.width, y: size.height)
         let affineModel = CGAffineTransform(a: CGFloat(transform.m11),

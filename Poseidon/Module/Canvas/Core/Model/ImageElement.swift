@@ -55,6 +55,11 @@ struct ImageElement: Element {
         renderBuffer.targetTexture = manager.filterChain(renderBuffer.originTexture, Int32(image.size.width), Int32(image.size.height), &filters, Int32(filters.count))
     }
     
+    mutating func release() {
+        filters.forEach { glDeleteProgram($0.program) }
+        CanvasRenderData.releaseRenderBuffer(&renderBuffer)
+    }
+    
     func inside(point: CGPoint) -> Bool {
         let sizeTrans = CGAffineTransform(scaleX: size.width, y: size.height)
         let affineModel = CGAffineTransform(a: CGFloat(transform.m11),
