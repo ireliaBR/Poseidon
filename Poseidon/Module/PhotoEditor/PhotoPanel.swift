@@ -62,7 +62,7 @@ struct PhotoPanel: View {
             let asset = fetchResult.object(at: index)
             
             let imageManager = PHImageManager.default()
-            imageManager.requestImage(for: asset, targetSize: CGSize(width: 150, height: 150), contentMode: .aspectFill, options: requestOptions) { image, _ in
+            imageManager.requestImage(for: asset, targetSize: CGSize(width: 1000, height: 1000), contentMode: .aspectFill, options: requestOptions) { image, _ in
                 if let image = image {
                     images.append(image)
                 }
