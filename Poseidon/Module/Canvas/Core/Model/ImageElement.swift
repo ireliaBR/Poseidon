@@ -24,9 +24,7 @@ struct ImageElement: Element {
     var indices: [Int32]
     var texCoords: [Float]
     
-    var VAO: UInt32?
-    var program: UInt32?
-    var texture: UInt32?
+    var renderBuffer = ElementRenderBuffer()
     var shaderName: String = "Image"
     
     static func image(_ image: UIImage) -> ImageElement {
@@ -83,21 +81,21 @@ struct ImageElement: Element {
     }
     
     mutating func initialRenderData() {
-        if program == nil {
+        if renderBuffer.program == 0 {
             let vsPath = Bundle.main.path(forResource: shaderName, ofType: "vs")!
             let fsPath = Bundle.main.path(forResource: shaderName, ofType: "fs")!
             let vsSource = try! String(contentsOfFile: vsPath, encoding: .utf8).utf8CString
             let fsSource = try! String(contentsOfFile: fsPath, encoding: .utf8).utf8CString
             let vsPointer = vsSource.withUnsafeBufferPointer { UnsafePointer<CChar>($0.baseAddress) }
             let fsPointer = fsSource.withUnsafeBufferPointer { UnsafePointer<CChar>($0.baseAddress) }
-            program = CanvasRenderData.createProgram(vsPointer, fsPointer)
+            CanvasRenderData.createProgram(&renderBuffer, vsPointer, fsPointer)
         }
         
-        if VAO == nil {
-            VAO = CanvasRenderData.createImageVAO(&vertices, MemoryLayout<Float>.size * vertices.count, &indices, MemoryLayout<Int32>.size * indices.count, &texCoords, MemoryLayout<Float>.size * texCoords.count)
+        if renderBuffer.VAO == 0 {
+            CanvasRenderData.createImageVAO(&renderBuffer, &vertices, MemoryLayout<Float>.size * vertices.count, &indices, MemoryLayout<Int32>.size * indices.count, &texCoords, MemoryLayout<Float>.size * texCoords.count)
         }
         
-        if texture == nil {
+        if renderBuffer.texture == 0 {
             guard let cgImage = image.cgImage else {
                 return
             }
@@ -120,7 +118,7 @@ struct ImageElement: Element {
             context?.translateBy(x: 0, y: CGFloat(height))
             context?.scaleBy(x: 1.0, y: -1.0)
             context?.draw(cgImage, in: CGRect(x: 0, y: 0, width: CGFloat(width), height: CGFloat(height)))
-            texture = CanvasRenderData.createTexture(imageData, Int32(width), Int32(height))
+            CanvasRenderData.createTexture(&renderBuffer, imageData, Int32(width), Int32(height))
             free(imageData)
         }
     }
@@ -132,10 +130,8 @@ struct ImageElement: Element {
         element.identifier = idPointer
         element.type = Image
         
-        element.VAO = VAO ?? 0
-        element.program = program ?? 0
+        element.renderBuffer = renderBuffer
         element.renderCount = UInt32(indices.count)
-        element.texture = texture ?? 0
         
         let sizeTrans = CATransform3DMakeScale(size.width * CanvasControl.scale, size.height * CanvasControl.scale, 1)
         

@@ -15,6 +15,7 @@
 		6924748C2B5FA877003C91F3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6924748B2B5FA877003C91F3 /* Assets.xcassets */; };
 		6924748F2B5FA877003C91F3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6924748E2B5FA877003C91F3 /* Preview Assets.xcassets */; };
 		692474972B5FAA2E003C91F3 /* PhotoEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692474962B5FAA2E003C91F3 /* PhotoEditor.swift */; };
+		69940B562B6F356900D98032 /* ElementRenderBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 69940B542B6F356900D98032 /* ElementRenderBuffer.cpp */; };
 		69975A8F2B6CC1DF00A7094A /* ImageElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69975A8E2B6CC1DF00A7094A /* ImageElement.swift */; };
 		69975A962B6CD29600A7094A /* CanvasRenderData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 69975A942B6CD29600A7094A /* CanvasRenderData.cpp */; };
 		69975A972B6CD9F100A7094A /* Image.vs in Resources */ = {isa = PBXBuildFile; fileRef = 69975A922B6CD1AC00A7094A /* Image.vs */; };
@@ -46,6 +47,8 @@
 		692474962B5FAA2E003C91F3 /* PhotoEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoEditor.swift; sourceTree = "<group>"; };
 		695876732B6785D800F2C6AC /* Shape.vs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Shape.vs; sourceTree = "<group>"; };
 		695876742B6785EA00F2C6AC /* Shape.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Shape.fs; sourceTree = "<group>"; };
+		69940B542B6F356900D98032 /* ElementRenderBuffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ElementRenderBuffer.cpp; sourceTree = "<group>"; };
+		69940B552B6F356900D98032 /* ElementRenderBuffer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ElementRenderBuffer.hpp; sourceTree = "<group>"; };
 		69975A8E2B6CC1DF00A7094A /* ImageElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageElement.swift; sourceTree = "<group>"; };
 		69975A922B6CD1AC00A7094A /* Image.vs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Image.vs; sourceTree = "<group>"; };
 		69975A932B6CD1AC00A7094A /* Image.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Image.fs; sourceTree = "<group>"; };
@@ -108,6 +111,8 @@
 			children = (
 				690BB64A2B68A337004764D3 /* ConvertElement.cpp */,
 				690BB64B2B68A337004764D3 /* ConvertElement.hpp */,
+				69940B542B6F356900D98032 /* ElementRenderBuffer.cpp */,
+				69940B552B6F356900D98032 /* ElementRenderBuffer.hpp */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -401,6 +406,7 @@
 				69975A8F2B6CC1DF00A7094A /* ImageElement.swift in Sources */,
 				699DD78D2B5FD6080067A43E /* CanvasConvertControl.cpp in Sources */,
 				69A4DB952B6A4D28003459BE /* ShapePanel.swift in Sources */,
+				69940B562B6F356900D98032 /* ElementRenderBuffer.cpp in Sources */,
 				692474882B5FA876003C91F3 /* PoseidonApp.swift in Sources */,
 				699DD7892B5FD5150067A43E /* CanvasControl.swift in Sources */,
 				690BB64C2B68A337004764D3 /* ConvertElement.cpp in Sources */,

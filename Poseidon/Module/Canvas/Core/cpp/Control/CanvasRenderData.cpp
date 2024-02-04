@@ -9,7 +9,7 @@
 #include <OpenGLES/ES3/gl.h>
 #include <iostream>
 
-unsigned int CanvasRenderData::createTexture(const void *data, int width, int height) {
+void CanvasRenderData::createTexture(ElementRenderBuffer &renderBuffer, const void *data, int width, int height) {
     unsigned int texture;
     // texture 1
     // ---------
@@ -24,10 +24,10 @@ unsigned int CanvasRenderData::createTexture(const void *data, int width, int he
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
     glGenerateMipmap(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, 0);
-    return texture;
+    renderBuffer.texture = texture;
 }
 
-unsigned int CanvasRenderData::createImageVAO(const float *vertices, const long verticesLength, const int *indices, const long indicesLength, const float *texCoords, const long texCoordsLength) {
+void CanvasRenderData::createImageVAO(ElementRenderBuffer &renderBuffer, const float *vertices, const long verticesLength, const int *indices, const long indicesLength, const float *texCoords, const long texCoordsLength) {
     unsigned int VAO, VBOs[2], EBO;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(2, VBOs);
@@ -57,10 +57,13 @@ unsigned int CanvasRenderData::createImageVAO(const float *vertices, const long 
     // You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
     // VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
     glBindVertexArray(0);
-    return VAO;
+    renderBuffer.VAO = VAO;
+    renderBuffer.VBOs = VBOs;
+    renderBuffer.VBOCount = 2;
+    renderBuffer.EBO = EBO;
 }
 
-unsigned int CanvasRenderData::createShapeVAO(const float *vertices, const long verticesLength, const int *indices, const long indicesLength) {
+void CanvasRenderData::createShapeVAO(ElementRenderBuffer &renderBuffer, const float *vertices, const long verticesLength, const int *indices, const long indicesLength) {
     //    // set up vertex data (and buffer(s)) and configure vertex attributes
     //    // ------------------------------------------------------------------
     //    float verticesss[] = {
@@ -73,14 +76,14 @@ unsigned int CanvasRenderData::createShapeVAO(const float *vertices, const long 
     //        0, 1, 3,  // first Triangle
     //        1, 2, 3   // second Triangle
     //    };
-    unsigned int VAO, VBO, EBO;
+    unsigned int VAO, VBOs[1], EBO;
     glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
+    glGenBuffers(1, VBOs);
     glGenBuffers(1, &EBO);
     // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
     glBindVertexArray(VAO);
     
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBindBuffer(GL_ARRAY_BUFFER, VBOs[0]);
     glBufferData(GL_ARRAY_BUFFER, verticesLength, vertices, GL_STATIC_DRAW);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
@@ -98,11 +101,13 @@ unsigned int CanvasRenderData::createShapeVAO(const float *vertices, const long 
     // You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
     // VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
     glBindVertexArray(0);
-    
-    return VAO;
+    renderBuffer.VAO = VAO;
+    renderBuffer.VBOs = VBOs;
+    renderBuffer.VBOCount = 1;
+    renderBuffer.EBO = EBO;
 }
 
-unsigned int CanvasRenderData::createProgram(const char *vsSource, const char *fsSource) {
+void CanvasRenderData::createProgram(ElementRenderBuffer &renderBuffer, const char *vsSource, const char *fsSource) {
     
     // build and compile our shader program
     // ------------------------------------
@@ -143,5 +148,5 @@ unsigned int CanvasRenderData::createProgram(const char *vsSource, const char *f
     }
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
-    return program;
+    renderBuffer.program = program;
 }

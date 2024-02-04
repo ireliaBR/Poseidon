@@ -47,23 +47,23 @@ unsigned int CanvasConvertControl::draw(const ConvertElement *array, size_t coun
         ConvertElement element = array[i];
         element.transform[3][1] = screenHeight - element.transform[3][1];
         
-        glUseProgram(element.program);
-        glUniformMatrix4fv(glGetUniformLocation(element.program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
-        glUniformMatrix4fv(glGetUniformLocation(element.program, "model"), 1, GL_FALSE, glm::value_ptr(element.transform));
+        glUseProgram(element.renderBuffer.program);
+        glUniformMatrix4fv(glGetUniformLocation(element.renderBuffer.program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+        glUniformMatrix4fv(glGetUniformLocation(element.renderBuffer.program, "model"), 1, GL_FALSE, glm::value_ptr(element.transform));
         switch (element.type) {
             case Shape:
-                glUniform4fv(glGetUniformLocation(element.program, "color"), 1, glm::value_ptr(element.color));
+                glUniform4fv(glGetUniformLocation(element.renderBuffer.program, "color"), 1, glm::value_ptr(element.color));
                 break;
             case Image:
-                glUniform1i(glGetUniformLocation(element.program, "texture1"), 0);
+                glUniform1i(glGetUniformLocation(element.renderBuffer.program, "texture1"), 0);
                 glActiveTexture(GL_TEXTURE0);
-                glBindTexture(GL_TEXTURE_2D, element.texture);
+                glBindTexture(GL_TEXTURE_2D, element.renderBuffer.texture);
                 break;
             default:
                 break;
         }
         
-        glBindVertexArray(element.VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
+        glBindVertexArray(element.renderBuffer.VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
         glDrawElements(GL_TRIANGLES, element.renderCount, GL_UNSIGNED_INT, 0);
     }
     return RBO;

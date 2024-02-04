@@ -21,9 +21,7 @@ struct ShapeElement: Element {
     var vertices: [Float]
     var indices: [Int32]
     
-    var VAO: UInt32?
-    var program: UInt32?
-    
+    var renderBuffer = ElementRenderBuffer()
     var shaderName: String = "Shape"
     
     static let square = {
@@ -86,18 +84,18 @@ struct ShapeElement: Element {
     }
     
     mutating func initialRenderData() {
-        if program == nil {
+        if renderBuffer.program == 0 {
             let vsPath = Bundle.main.path(forResource: shaderName, ofType: "vs")!
             let fsPath = Bundle.main.path(forResource: shaderName, ofType: "fs")!
             let vsSource = try! String(contentsOfFile: vsPath, encoding: .utf8).utf8CString
             let fsSource = try! String(contentsOfFile: fsPath, encoding: .utf8).utf8CString
             let vsPointer = vsSource.withUnsafeBufferPointer { UnsafePointer<CChar>($0.baseAddress) }
             let fsPointer = fsSource.withUnsafeBufferPointer { UnsafePointer<CChar>($0.baseAddress) }
-            program = CanvasRenderData.createProgram(vsPointer, fsPointer)
+            CanvasRenderData.createProgram(&renderBuffer, vsPointer, fsPointer)
         }
         
-        if VAO == nil {
-            VAO = CanvasRenderData.createShapeVAO(&vertices, MemoryLayout<Float>.size * vertices.count, &indices, MemoryLayout<Int32>.size * indices.count)
+        if renderBuffer.VAO == 0 {
+            CanvasRenderData.createShapeVAO(&renderBuffer, &vertices, MemoryLayout<Float>.size * vertices.count, &indices, MemoryLayout<Int32>.size * indices.count)
         }
     }
     
@@ -108,8 +106,7 @@ struct ShapeElement: Element {
         element.identifier = idPointer
         element.type = Shape
         
-        element.VAO = VAO ?? 0
-        element.program = program ?? 0
+        element.renderBuffer = renderBuffer
         element.renderCount = UInt32(indices.count)
         element.color = glm.vec4()
         // 定义变量来存储 RGBA 值

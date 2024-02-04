@@ -9,22 +9,27 @@
 #define CanvasRenderData_hpp
 
 #include <stdio.h>
+#include "ElementRenderBuffer.hpp"
 
 class CanvasRenderData {
 public:
-    static unsigned int createProgram(const char *vsSource, 
+    static void createProgram(ElementRenderBuffer &renderBuffer,
+                                      const char *vsSource,
                                       const char *fsSource);
-    static unsigned int createShapeVAO(const float *vertices, 
+    static void createShapeVAO(ElementRenderBuffer &renderBuffer,
+                                       const float *vertices,
                                        const long verticesLength,
                                        const int *indices,
                                        const long indicesLength);
-    static unsigned int createImageVAO(const float *vertices, 
+    static void createImageVAO(ElementRenderBuffer &renderBuffer,
+                                       const float *vertices,
                                        const long verticesLength,
                                        const int *indices,
                                        const long indicesLength,
                                        const float *texCoords,
                                        const long texCoordsLength);
-    static unsigned int createTexture(const void *data, 
+    static void createTexture(ElementRenderBuffer &renderBuffer,
+                                      const void *data,
                                       int width,
                                       int height);
 };

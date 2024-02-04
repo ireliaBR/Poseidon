@@ -10,6 +10,7 @@
 
 #include <stdio.h>
 #include <glm/gtc/matrix_transform.hpp>
+#include "ElementRenderBuffer.hpp"
 
 enum ElementType {
     Shape,
@@ -24,10 +25,8 @@ public:
     
     ElementType type;
     
-    unsigned int VAO;
-    unsigned int program;
+    ElementRenderBuffer renderBuffer;
     unsigned int renderCount;
-    unsigned int texture;
     
 };
 
