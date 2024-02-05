@@ -66,11 +66,12 @@ struct FilterPanel: View {
     @State var currentItem: Filter = .none
     @State private var sliderValue: Double = 0.5
     
+    @EnvironmentObject var messageViewModel: MessageViewModel
+    
     let items: [Filter] = [.gray]
     
     var body: some View {
         VStack {
-            
             if currentItem != .none {
                 Slider(value: $sliderValue, in: 0...1)
             }

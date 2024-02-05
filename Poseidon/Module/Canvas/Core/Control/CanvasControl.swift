@@ -53,7 +53,6 @@ class CanvasControl {
     func addElement(_ element: Element) {
         var copyElement = element
         copyElement.initialRenderData()
-        copyElement.renderFilter(filterManager)
         elements.append(copyElement)
     }
 }

@@ -8,12 +8,15 @@
 import SwiftUI
 
 enum ImageOperate {
-case filter
+    case filter
+    case none
 }
 
 extension ImageOperate {
     var icon: UIImage {
         switch self {
+        case .none:
+            UIImage(systemName: "camera.filters")!
         case .filter:
             UIImage(systemName: "camera.filters", withConfiguration: UIImage.SymbolConfiguration(pointSize: 40))!.withTintColor(.gray)
         }
@@ -21,6 +24,8 @@ extension ImageOperate {
     
     var text: String {
         switch self {
+        case .none:
+            ""
         case .filter:
             "滤镜"
         }
@@ -30,6 +35,7 @@ extension ImageOperate {
 struct SelectImagePanel: View {
     
     let items: [ImageOperate] = [.filter]
+    let itemAction: ((ImageOperate) -> Void)?
     
     var body: some View {
         VStack {
@@ -37,6 +43,7 @@ struct SelectImagePanel: View {
                 HStack {
                     ForEach(items, id: \.self) { item in
                         Button(action: {
+                            itemAction?(item)
                         }, label: {
                             VStack {
                                 Image(uiImage: item.icon)
@@ -65,7 +72,7 @@ struct SelectImagePanelView: View {
     
     var body: some View {
         Spacer()
-        SelectImagePanel()
+        SelectImagePanel(itemAction: {_ in })
             .frame(maxWidth: .infinity, maxHeight: 134)
     }
 }

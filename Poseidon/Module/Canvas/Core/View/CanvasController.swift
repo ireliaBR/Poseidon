@@ -14,6 +14,11 @@ import OpenGLES
 class MessageViewModel: ObservableObject {
     @Published var element: Element?
     @Published var cancelSelected: Bool?
+    
+    @Published var currentElement: Element?
+    
+    @Published var addFilter: BaseFilter?
+    @Published var filterValue: CGFloat?
 }
 
 class CanvasController: UIViewController, SelectBackgroundViewDelegate {
@@ -78,7 +83,6 @@ class CanvasController: UIViewController, SelectBackgroundViewDelegate {
             .sink { [weak self] element in
                 if element != nil {
                     self?.canvasControl.addElement(element!)
-                    
                     self?.canvasControl.draw()
                 }
             }
@@ -106,6 +110,7 @@ class CanvasController: UIViewController, SelectBackgroundViewDelegate {
                 return view
             }()
             if let selectBGView {
+                messageViewModel.currentElement = element
                 view.addSubview(selectBGView)
                 selectBGView.snp.makeConstraints { make in
                     make.edges.equalToSuperview()
@@ -125,11 +130,13 @@ class CanvasController: UIViewController, SelectBackgroundViewDelegate {
         canvasControl.draw()
         selectBGView?.removeFromSuperview()
         selectBGView = nil
+        messageViewModel.currentElement = nil
     }
     
     func cancelSelected() {
         selectBGView?.removeFromSuperview()
         selectBGView = nil
+        messageViewModel.currentElement = nil
     }
 }
 

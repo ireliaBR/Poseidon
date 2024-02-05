@@ -9,6 +9,7 @@ import SwiftUI
 
 struct PhotoEditor: View {
     
+    @EnvironmentObject var messageViewModel: MessageViewModel
     @State var yOffset: CGFloat = 134
     @State var currentSelectedType: HomePanel.ButtonType = .none {
         didSet {
@@ -18,19 +19,42 @@ struct PhotoEditor: View {
         }
     }
     
+    @State var imageOperate: ImageOperate = .none
+    
     var body: some View {
         ZStack {
             VStack {
-//                CanvasView(tapAction: {
-//                    withAnimation(.easeIn) {
-//                        currentSelectedType = .none
-//                    }
-//                })
-//                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                CanvasVieww()
+                CanvasView(tapAction: {
+                    withAnimation(.easeIn) {
+                        currentSelectedType = .none
+                    }
+                })
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+//                CanvasVieww()
                 HomePanel { type in
                     withAnimation(.easeIn) {
                         currentSelectedType = type
+                    }
+                }
+            }
+            
+            if let _ = messageViewModel.currentElement as? ImageElement {
+                VStack {
+                    Spacer()
+                    SelectImagePanel(itemAction: { imageOperate in
+                        self.imageOperate = imageOperate
+                    })
+                    .frame(maxWidth: .infinity, maxHeight: 134)
+                    .background(.white)
+                    
+                }
+                if imageOperate == .filter {
+                    VStack {
+                        Spacer()
+                        FilterPanel()
+                        .frame(maxWidth: .infinity, maxHeight: 134)
+                        .background(.white)
+                        
                     }
                 }
             }

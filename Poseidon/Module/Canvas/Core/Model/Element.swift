@@ -18,6 +18,7 @@ protocol Element {
     
     var renderBuffer: ElementRenderBuffer { get set }
     
+    var filterValue: CGFloat { get set }
     mutating func renderFilter(_ manager: FilterManager)
     mutating func release()
     

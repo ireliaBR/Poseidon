@@ -24,6 +24,8 @@ struct ImageElement: Element {
     var indices: [Int32]
     var texCoords: [Float]
     
+    var filterValue: CGFloat = 0.5
+    
     var renderBuffer = ElementRenderBuffer()
     var shaderName: String = "Image"
     var filters = [BaseFilter]()

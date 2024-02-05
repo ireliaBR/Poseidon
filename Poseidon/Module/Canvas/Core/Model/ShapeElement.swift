@@ -9,7 +9,6 @@ import Foundation
 import UIKit
 
 struct ShapeElement: Element {
-    
     var identifier: String = UUID().uuidString
     
     var transform: CATransform3D = CATransform3DIdentity
@@ -20,6 +19,8 @@ struct ShapeElement: Element {
     
     var vertices: [Float]
     var indices: [Int32]
+    
+    var filterValue: CGFloat = 0.5
     
     var renderBuffer = ElementRenderBuffer()
     var shaderName: String = "Shape"
