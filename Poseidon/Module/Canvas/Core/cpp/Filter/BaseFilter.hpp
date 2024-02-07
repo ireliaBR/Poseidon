@@ -12,11 +12,17 @@
 
 class BaseFilter {
 private:
+   
+    const char* md5(const char *vs, const char *fs);
+public:
+    const char *identify;
+    unsigned int program;
+    
     const char *vs;
     const char *fs;
     
-public:
-    unsigned int program;
+    float filterValue;
+    
     BaseFilter();
     BaseFilter(const char *vs, const char *fs);
     void configUniform();

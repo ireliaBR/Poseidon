@@ -20,8 +20,6 @@ struct ShapeElement: Element {
     var vertices: [Float]
     var indices: [Int32]
     
-    var filterValue: CGFloat = 0.5
-    
     var renderBuffer = ElementRenderBuffer()
     var shaderName: String = "Shape"
     

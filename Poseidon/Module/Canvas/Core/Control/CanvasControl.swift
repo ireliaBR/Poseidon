@@ -44,6 +44,15 @@ class CanvasControl {
         }
     }
     
+    func filter(element: Element, filters: [BaseFilter]) {
+        guard var ele = element as? ImageElement else { return }
+        ele.addFilter(filters: filters)
+        ele.renderFilter(filterManager)
+        if let index = elements.firstIndex(where: { $0.identifier == ele.identifier }) {
+            elements[index] = ele
+        }
+    }
+    
     func deleteElement(_ element: Element) {
         var element = element;
         element.release()

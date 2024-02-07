@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+
 enum Filter {
     case gray
     case none
@@ -40,6 +41,7 @@ extension Filter {
     precision mediump float;
 
     uniform sampler2D texture1;
+    uniform float intensity;
 
     in vec2 TexCoord;
     out vec4 fragColor;
@@ -49,7 +51,7 @@ extension Filter {
     {
         vec4 sampleColor = texture(texture1, TexCoord);
         float luminance = dot(sampleColor.rgb, LUMINANCE_FACTOR);
-        fragColor = vec4(mix(vec3(luminance), sampleColor.rgb, 1.0 - 0.8), 1.0);
+        fragColor = vec4(mix(vec3(luminance), sampleColor.rgb, 1.0 - intensity), 1.0);
     }
 
     """.utf8CString
@@ -64,7 +66,7 @@ extension Filter {
 struct FilterPanel: View {
     
     @State var currentItem: Filter = .none
-    @State private var sliderValue: Double = 0.5
+    @State private var sliderValue: Float = 0.5
     
     @EnvironmentObject var messageViewModel: MessageViewModel
     
@@ -74,12 +76,20 @@ struct FilterPanel: View {
         VStack {
             if currentItem != .none {
                 Slider(value: $sliderValue, in: 0...1)
+                    .onChange(of: sliderValue) { oldValue, newValue in
+                        var filter = Filter.gray.filter!
+                        filter.filterValue = sliderValue
+                        messageViewModel.addFilter = [filter]
+                    }
             }
             ScrollView(.horizontal) {
                 HStack {
                     ForEach(items, id: \.self) { item in
                         Button(action: {
                             currentItem = item
+                            var filter = Filter.gray.filter!
+                            filter.filterValue = sliderValue
+                            messageViewModel.addFilter = [filter]
                         }, label: {
                             Color.gray
                         })

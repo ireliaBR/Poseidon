@@ -11,7 +11,6 @@ import OpenGLES
 
 struct ImageElement: Element {
     
-    
     var identifier: String = UUID().uuidString
     
     var transform: CATransform3D = CATransform3DIdentity
@@ -23,8 +22,6 @@ struct ImageElement: Element {
     var vertices: [Float]
     var indices: [Int32]
     var texCoords: [Float]
-    
-    var filterValue: CGFloat = 0.5
     
     var renderBuffer = ElementRenderBuffer()
     var shaderName: String = "Image"
@@ -48,13 +45,17 @@ struct ImageElement: Element {
             0.0, 0.0, // bottom left
             0.0, 1.0  // top left
         ]
-        var element = ImageElement(size: CGSize(width: 150, height: 150), image: image, vertices: vertices, indices: indices, texCoords: texCoords)
+        let element = ImageElement(size: CGSize(width: 150, height: 150), image: image, vertices: vertices, indices: indices, texCoords: texCoords)
         return element
     }
     
     mutating func renderFilter(_ manager: FilterManager) {
         var manager = manager
         renderBuffer.targetTexture = manager.filterChain(renderBuffer.originTexture, Int32(image.size.width), Int32(image.size.height), &filters, Int32(filters.count))
+    }
+    
+    mutating func addFilter(filters: [BaseFilter]) {
+        self.filters = filters
     }
     
     mutating func release() {

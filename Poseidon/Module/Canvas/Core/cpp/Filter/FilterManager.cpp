@@ -68,6 +68,15 @@ unsigned int FilterManager::filterChain(unsigned int texture, int width, int hei
 
 unsigned int FilterManager::filter(unsigned int texture, int width, int height, BaseFilter filter) {
     
+//    if (filter.program == 0) {
+//        if (programMap.count(filter.identify)) {
+//            filter.program = programMap[filter.identify];
+//        } else {
+//            CanvasRenderData::createProgram(filter.program, filter.vs, filter.fs);
+//            programMap[filter.identify] = filter.program;
+//        }
+//    }
+    
     unsigned int tmpTexture;
     glGenTextures(1, &tmpTexture);
     glBindTexture(GL_TEXTURE_2D, tmpTexture);
@@ -91,6 +100,7 @@ unsigned int FilterManager::filter(unsigned int texture, int width, int height, 
     
     glUseProgram(filter.program);
     glBindTexture(GL_TEXTURE_2D, texture);
+    glUniform1f(glGetUniformLocation(filter.program, "intensity"), filter.filterValue);
     glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);

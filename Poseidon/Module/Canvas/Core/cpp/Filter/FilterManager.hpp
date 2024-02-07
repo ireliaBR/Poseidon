@@ -9,6 +9,7 @@
 #define FilterManager_hpp
 
 #include <stdio.h>
+#include <map>
 #include "BaseFilter.hpp"
 
 class FilterManager {
@@ -39,6 +40,8 @@ private:
         0, 1, 3, // first triangle
         1, 2, 3  // second triangle
     };
+    
+    std::map<const char *, unsigned int> programMap;
     
 public:
     FilterManager();
