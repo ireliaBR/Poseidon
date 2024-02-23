@@ -15,6 +15,11 @@
 		6924748C2B5FA877003C91F3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6924748B2B5FA877003C91F3 /* Assets.xcassets */; };
 		6924748F2B5FA877003C91F3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6924748E2B5FA877003C91F3 /* Preview Assets.xcassets */; };
 		692474972B5FAA2E003C91F3 /* PhotoEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692474962B5FAA2E003C91F3 /* PhotoEditor.swift */; };
+		69266E9F2B88935B0014D323 /* FilterProgramManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69266E9E2B88935B0014D323 /* FilterProgramManager.swift */; };
+		69266EA22B8895070014D323 /* Filter.vs in Resources */ = {isa = PBXBuildFile; fileRef = 69266EA12B8895070014D323 /* Filter.vs */; };
+		69266EA42B88951E0014D323 /* Contrast.fs in Resources */ = {isa = PBXBuildFile; fileRef = 69266EA32B88951E0014D323 /* Contrast.fs */; };
+		69266EA82B88993A0014D323 /* Saturation.fs in Resources */ = {isa = PBXBuildFile; fileRef = 69266EA72B88993A0014D323 /* Saturation.fs */; };
+		69266EAA2B8899CA0014D323 /* Luminance.fs in Resources */ = {isa = PBXBuildFile; fileRef = 69266EA92B8899CA0014D323 /* Luminance.fs */; };
 		69940B562B6F356900D98032 /* ElementRenderBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 69940B542B6F356900D98032 /* ElementRenderBuffer.cpp */; };
 		69940B5A2B6F5BE300D98032 /* FilterManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 69940B582B6F5BE300D98032 /* FilterManager.cpp */; };
 		69940B5D2B6F5CFA00D98032 /* BaseFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 69940B5B2B6F5CFA00D98032 /* BaseFilter.cpp */; };
@@ -50,6 +55,11 @@
 		6924748B2B5FA877003C91F3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6924748E2B5FA877003C91F3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		692474962B5FAA2E003C91F3 /* PhotoEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoEditor.swift; sourceTree = "<group>"; };
+		69266E9E2B88935B0014D323 /* FilterProgramManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterProgramManager.swift; sourceTree = "<group>"; };
+		69266EA12B8895070014D323 /* Filter.vs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Filter.vs; sourceTree = "<group>"; };
+		69266EA32B88951E0014D323 /* Contrast.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Contrast.fs; sourceTree = "<group>"; };
+		69266EA72B88993A0014D323 /* Saturation.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Saturation.fs; sourceTree = "<group>"; };
+		69266EA92B8899CA0014D323 /* Luminance.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Luminance.fs; sourceTree = "<group>"; };
 		695876732B6785D800F2C6AC /* Shape.vs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Shape.vs; sourceTree = "<group>"; };
 		695876742B6785EA00F2C6AC /* Shape.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Shape.fs; sourceTree = "<group>"; };
 		69940B542B6F356900D98032 /* ElementRenderBuffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ElementRenderBuffer.cpp; sourceTree = "<group>"; };
@@ -177,9 +187,21 @@
 			path = Module;
 			sourceTree = "<group>";
 		};
+		69266EA02B8894900014D323 /* Filter */ = {
+			isa = PBXGroup;
+			children = (
+				69266EA72B88993A0014D323 /* Saturation.fs */,
+				69266EA12B8895070014D323 /* Filter.vs */,
+				69266EA32B88951E0014D323 /* Contrast.fs */,
+				69266EA92B8899CA0014D323 /* Luminance.fs */,
+			);
+			path = Filter;
+			sourceTree = "<group>";
+		};
 		695876722B67859800F2C6AC /* ShaderSource */ = {
 			isa = PBXGroup;
 			children = (
+				69266EA02B8894900014D323 /* Filter */,
 				69975A912B6CD19700A7094A /* Image */,
 				69975A902B6CD19000A7094A /* Shape */,
 			);
@@ -283,6 +305,7 @@
 			isa = PBXGroup;
 			children = (
 				699DD7882B5FD5150067A43E /* CanvasControl.swift */,
+				69266E9E2B88935B0014D323 /* FilterProgramManager.swift */,
 			);
 			path = Control;
 			sourceTree = "<group>";
@@ -365,7 +388,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				69266EA42B88951E0014D323 /* Contrast.fs in Resources */,
+				69266EAA2B8899CA0014D323 /* Luminance.fs in Resources */,
+				69266EA22B8895070014D323 /* Filter.vs in Resources */,
 				69975A972B6CD9F100A7094A /* Image.vs in Resources */,
+				69266EA82B88993A0014D323 /* Saturation.fs in Resources */,
 				69CE60A92B67910400FC7B50 /* Shape.fs in Resources */,
 				69975A982B6CD9F300A7094A /* Image.fs in Resources */,
 				69CE60A82B67910200FC7B50 /* Shape.vs in Resources */,
@@ -425,6 +452,7 @@
 			files = (
 				6904DCFC2B69EF9C008E22D5 /* CGPoint+Additional.swift in Sources */,
 				69940B5A2B6F5BE300D98032 /* FilterManager.cpp in Sources */,
+				69266E9F2B88935B0014D323 /* FilterProgramManager.swift in Sources */,
 				69E3AD8C2B6C943500503B97 /* PhotoPanel.swift in Sources */,
 				692474972B5FAA2E003C91F3 /* PhotoEditor.swift in Sources */,
 				69CE60AC2B6791B600FC7B50 /* CanvasController.swift in Sources */,

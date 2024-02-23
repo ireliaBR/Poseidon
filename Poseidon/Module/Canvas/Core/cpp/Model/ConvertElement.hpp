@@ -28,6 +28,8 @@ public:
     ElementRenderBuffer renderBuffer;
     unsigned int renderCount;
     
+    float intensity;
+    
 };
 
 #endif /* ConvertElement_hpp */

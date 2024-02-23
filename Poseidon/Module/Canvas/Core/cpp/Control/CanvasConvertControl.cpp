@@ -56,6 +56,7 @@ unsigned int CanvasConvertControl::draw(const ConvertElement *array, size_t coun
                 break;
             case Image:
                 glUniform1i(glGetUniformLocation(element.renderBuffer.program, "texture1"), 0);
+                glUniform1f(glGetUniformLocation(element.renderBuffer.program, "intensity"), element.intensity);
                 glActiveTexture(GL_TEXTURE0);
                 glBindTexture(GL_TEXTURE_2D, element.renderBuffer.targetTexture);
                 break;

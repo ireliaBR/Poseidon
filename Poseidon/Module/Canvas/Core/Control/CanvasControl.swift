@@ -44,10 +44,17 @@ class CanvasControl {
         }
     }
     
-    func filter(element: Element, filters: [BaseFilter]) {
+    func filter(element: Element, filter: FilterType) {
         guard var ele = element as? ImageElement else { return }
-        ele.addFilter(filters: filters)
-        ele.renderFilter(filterManager)
+        ele.addFilter(filter: filter)
+        if let index = elements.firstIndex(where: { $0.identifier == ele.identifier }) {
+            elements[index] = ele
+        }
+    }
+    
+    func filterIntensity(element: Element, filterIntensity: Float) {
+        guard var ele = element as? ImageElement else { return }
+        ele.intensity = filterIntensity
         if let index = elements.firstIndex(where: { $0.identifier == ele.identifier }) {
             elements[index] = ele
         }

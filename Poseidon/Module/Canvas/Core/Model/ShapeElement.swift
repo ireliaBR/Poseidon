@@ -51,9 +51,9 @@ struct ShapeElement: Element {
         return element
     }
     
-    func renderFilter(_ manager: FilterManager) {
-        
-    }
+//    func renderFilter(_ manager: FilterManager) {
+//        
+//    }
     
     mutating func release() {
         CanvasRenderData.releaseRenderBuffer(&renderBuffer)

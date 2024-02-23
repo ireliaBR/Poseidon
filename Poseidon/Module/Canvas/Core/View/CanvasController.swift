@@ -17,7 +17,8 @@ class MessageViewModel: ObservableObject {
     
     @Published var currentElement: Element?
     
-    @Published var addFilter: [BaseFilter]?
+    @Published var addFilter: FilterType?
+    @Published var filterIntensity: Float = 0.5
 }
 
 class CanvasController: UIViewController, SelectBackgroundViewDelegate {
@@ -95,16 +96,27 @@ class CanvasController: UIViewController, SelectBackgroundViewDelegate {
             }
             .store(in: &cancellables)
         
-    messageViewModel.$addFilter
-        .sink { [weak self] filter in
-            guard let filter, let element = self?.messageViewModel.currentElement else {
-                return
+        messageViewModel.$addFilter
+            .sink { [weak self] filter in
+                guard let filter, let element = self?.messageViewModel.currentElement else {
+                    return
+                }
+                self?.canvasControl.filter(element: element, filter: filter)
+                self?.canvasControl.draw()
             }
-            self?.canvasControl.filter(element: element, filters: filter)
-            self?.canvasControl.draw()
-        }
-        .store(in: &cancellables)
+            .store(in: &cancellables)
+        
+        messageViewModel.$filterIntensity
+            .sink { [weak self] filterIntensity in
+                guard let element = self?.messageViewModel.currentElement else {
+                    return
+                }
+                self?.canvasControl.filterIntensity(element: element, filterIntensity: filterIntensity)
+                self?.canvasControl.draw()
+            }
+            .store(in: &cancellables)
     }
+    
     
     @objc func tapView(gesture: UITapGestureRecognizer) {
         tapAction?()

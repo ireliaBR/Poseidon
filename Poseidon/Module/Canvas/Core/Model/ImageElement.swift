@@ -27,6 +27,8 @@ struct ImageElement: Element {
     var shaderName: String = "Image"
     var filters = [BaseFilter]()
     
+    var intensity: Float = 0.5
+    
     static func image(_ image: UIImage) -> ImageElement {
         let vertices: [Float] = [
             0.5,  0.5, 0.0,  // top right
@@ -45,17 +47,17 @@ struct ImageElement: Element {
             0.0, 0.0, // bottom left
             0.0, 1.0  // top left
         ]
-        let element = ImageElement(size: CGSize(width: 150, height: 150), image: image, vertices: vertices, indices: indices, texCoords: texCoords)
+        let element = ImageElement(size: CGSize(width: 300, height: 300), image: image, vertices: vertices, indices: indices, texCoords: texCoords)
         return element
     }
     
-    mutating func renderFilter(_ manager: FilterManager) {
-        var manager = manager
-        renderBuffer.targetTexture = manager.filterChain(renderBuffer.originTexture, Int32(image.size.width), Int32(image.size.height), &filters, Int32(filters.count))
-    }
+//    mutating func renderFilter(_ manager: FilterManager) {
+//        var manager = manager
+//        renderBuffer.targetTexture = manager.filterChain(renderBuffer.originTexture, Int32(image.size.width), Int32(image.size.height), &filters, Int32(filters.count))
+//    }
     
-    mutating func addFilter(filters: [BaseFilter]) {
-        self.filters = filters
+    mutating func addFilter(filter: FilterType) {
+        renderBuffer.program = FilterProgramManager.shared.programMap[filter] ?? 0
     }
     
     mutating func release() {
@@ -103,6 +105,7 @@ struct ImageElement: Element {
             let vsPointer = vsSource.withUnsafeBufferPointer { UnsafePointer<CChar>($0.baseAddress) }
             let fsPointer = fsSource.withUnsafeBufferPointer { UnsafePointer<CChar>($0.baseAddress) }
             CanvasRenderData.createProgram(&renderBuffer.program, vsPointer, fsPointer)
+            renderBuffer.program = FilterProgramManager.shared.programMap[.luminance] ?? 0
         }
         
         if renderBuffer.VAO == 0 {
@@ -121,7 +124,7 @@ struct ImageElement: Element {
             }
             let width = GLsizei(cgImage.width)
             let height = GLsizei(cgImage.height)
-            size = CGSize(width: 150, height: Int(height * 150 / width))
+            size = CGSize(width: 300, height: Int(height * 300 / width))
             
             guard let imageData = calloc(Int(width * height) * 4, MemoryLayout<GLubyte>.size) else {
                 print("Failed to allocate memory for image data.")
@@ -189,6 +192,7 @@ void main()
         let idPointer = convertId.withUnsafeBufferPointer { UnsafePointer<CChar>($0.baseAddress) }
         element.identifier = idPointer
         element.type = Image
+        element.intensity = intensity
         
         element.renderBuffer = renderBuffer
         element.renderCount = UInt32(indices.count)

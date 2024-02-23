@@ -41,21 +41,10 @@ struct PhotoEditor: View {
             if let _ = messageViewModel.currentElement as? ImageElement {
                 VStack {
                     Spacer()
-                    SelectImagePanel(itemAction: { imageOperate in
-                        self.imageOperate = imageOperate
-                    })
-                    .frame(maxWidth: .infinity, maxHeight: 134)
-                    .background(.white)
-                    
-                }
-                if imageOperate == .filter {
-                    VStack {
-                        Spacer()
-                        FilterPanel()
+                    FilterPanel()
                         .frame(maxWidth: .infinity, maxHeight: 134)
                         .background(.white)
-                        
-                    }
+                    
                 }
             }
             if currentSelectedType == .shape {

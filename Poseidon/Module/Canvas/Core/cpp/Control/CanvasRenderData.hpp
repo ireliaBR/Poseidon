@@ -16,7 +16,9 @@ public:
     static void createProgram(unsigned int &program,
                               const char *vsSource,
                               const char *fsSource);
-    static void createShapeVAO(unsigned int &VAO, 
+    static unsigned int createProgram(const char *vsSource,
+                              const char *fsSource);
+    static void createShapeVAO(unsigned int &VAO,
                                unsigned int &VBO,
                                unsigned int &EBO,
                                const float *vertices,
