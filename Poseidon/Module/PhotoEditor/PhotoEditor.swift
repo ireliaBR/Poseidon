@@ -85,11 +85,11 @@ struct HomePanel: View {
                     action(.shape)
                     messageViewModel.cancelSelected = true
                 }
-                Spacer()
-                PhotoEditorButton(icon: "paintpalette.fill", text: "画笔") {
-                    action(.paint)
-                    messageViewModel.cancelSelected = true
-                }
+//                Spacer()
+//                PhotoEditorButton(icon: "paintpalette.fill", text: "画笔") {
+//                    action(.paint)
+//                    messageViewModel.cancelSelected = true
+//                }
                 Spacer()
                 PhotoEditorButton(icon: "photo.fill", text: "图片") {
                     action(.photo)
