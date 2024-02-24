@@ -10,4 +10,6 @@ open Poseidon.xcworkspace
 ```
 ## 部分界面
 ### 添加图形
-![添加图形](./Doc/shape_edit.gif)
+![添加图形](./Doc/1.gif)
+### 添加图片
+![添加图片](./Doc/2.gif)
