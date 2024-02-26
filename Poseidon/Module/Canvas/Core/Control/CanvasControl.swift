@@ -53,10 +53,11 @@ class CanvasControl {
     }
     
     func filterIntensity(element: Element, filterIntensity: Float) {
-        guard var ele = element as? ImageElement else { return }
-        ele.intensity = filterIntensity
+        guard let ele = element as? ImageElement else { return }
+        guard var currentElement = elements.filter({ $0.identifier == ele.identifier }).first else { return }
+        currentElement.intensity = filterIntensity
         if let index = elements.firstIndex(where: { $0.identifier == ele.identifier }) {
-            elements[index] = ele
+            elements[index] = currentElement
         }
     }
     

@@ -23,6 +23,8 @@ struct ShapeElement: Element {
     var renderBuffer = ElementRenderBuffer()
     var shaderName: String = "Shape"
     
+    var intensity: Float = 0.5
+    
     static let square = {
         let vertices: [Float] = [
             0.5,  0.5, 0.0,  // top right

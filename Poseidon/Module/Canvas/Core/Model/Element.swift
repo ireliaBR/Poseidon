@@ -18,6 +18,8 @@ protocol Element {
     
     var renderBuffer: ElementRenderBuffer { get set }
     
+    var intensity: Float { get set }
+    
 //    mutating func renderFilter(_ manager: FilterManager)
     mutating func release()
     
